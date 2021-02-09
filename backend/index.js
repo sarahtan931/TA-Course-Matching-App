@@ -17,6 +17,7 @@ const Instructor = require("./models/instructors.js");
 const User = require("./models/user.js");
 const TAs = require("./models/ta_applicants.js");
 const Application = require("./models/apps.js");
+require('./passportconfig');
 
 const router = express.Router();
 router.use(bodyParser.json());
@@ -35,31 +36,6 @@ app.use((req, res, next) => {
   next();
 });
 
-const LocalStrategy = require('passport-local');
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password'
-    }, 
-    function (email, password, cb) {
-        return User.findOne({"email": email})
-           .then(user => {
-               if (!user || !user.validatePassword(password)) {
-                   return cb(null, false, {message: 'Incorrect email or password.'});
-               }
-               return cb(null, user, {message: 'Logged In Successfully'});
-          })
-          .catch(err => cb(err));
-    }
-));
 
 //login mechanism
 router.post('/login', (req, res, next) => {
@@ -129,11 +105,9 @@ router.post('/setpassword', (req,res,next) => {
 
 })
 
-
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
-
 
 app.use('/api', router);
 
