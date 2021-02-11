@@ -7,7 +7,9 @@ export default class LoginExample extends Component {
 		super(props);
 		this.state = {
 			email: "",
+            activationKey: "",
 			password: "",
+            passwordConfirm: ""
 		};
 	}
 
@@ -44,27 +46,45 @@ export default class LoginExample extends Component {
 	render() {
 		return (
 			<form onSubmit={this.onSubmit} >
-				<h1>Login Below!</h1>
+				<h1>Register Below!</h1>
 
 				<TextField
 					type="email"
 					name="email"
-					placeholder="Enter email"
+					placeholder="Email"
                     variant="outlined"
 					value={this.state.email}
 					onChange={this.handleInputChange}
 					required
 				/>
 				<TextField
+					type="text"
+					name="ActivationKey"
+					placeholder="Activation Key"
+                    variant="outlined"
+					value={this.state.activationKey}
+					onChange={this.handleInputChange}
+					required
+				/>
+                <TextField
 					type="password"
 					name="password"
-					placeholder="Enter password"
+					placeholder="New password"
                     variant="outlined"
 					value={this.state.password}
 					onChange={this.handleInputChange}
 					required
 				/>
-				<Button type="submit" value="Submit" variant="contained" color="primary">Sign In</Button> 
+                <TextField
+					type="password"
+					name="password"
+					placeholder="Re-enter password"
+                    variant="outlined"
+					value={this.state.passwordConfirm}
+					onChange={this.handleInputChange}
+					required
+				/>
+				<Button type="submit" value="Submit" variant="contained" color="primary">Sign Up</Button> 
 			</form>
 		);
 	}
