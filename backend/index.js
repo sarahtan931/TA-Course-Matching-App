@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 
 //login mechanism
 router.post('/login', (req, res, next) => {
-  const user = req.body;
+  const user = req.body.user;
    if(!user.email) {
      return res.status(404).send('No email');
    }
