@@ -31,15 +31,20 @@ db.once('open', function () {
   console.log("Connected")
 });
 
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   console.log(`${req.method} request for ${req.url}`);
   next();
-});
-
+}); */
 
 //login mechanism
+router.post('/auth', (req, res) => {
+  console.log("Backend " + JSON.stringify(req.body));
+  return res.status(200);
+});
+
 router.post('/login', (req, res, next) => {
-  const user = req.body.user;
+  const user = req.body;
+  console.log(user.email);
    if(!user.email) {
      return res.status(404).send('No email');
    }
@@ -50,6 +55,7 @@ router.post('/login', (req, res, next) => {
      if(err) {
       return res.status('404').send('Error')
      }
+
      if(passportUser) {
        const user = passportUser;
        user.token = passportUser.generateJWT();
@@ -59,7 +65,7 @@ router.post('/login', (req, res, next) => {
    })(req, res, next);
  });
 
- //add a new user to the system and give them an authentication key
+//add a new user to the system and give them an authentication key
 router.post('/register', [
   check("email").isEmail(),
   check('name').trim().matches(/^([0-9A-Za-z\u00AA-\uFFDC]*)$/).isLength({ min: 1, max:20 }).escape()
