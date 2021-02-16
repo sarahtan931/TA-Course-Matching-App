@@ -43,29 +43,28 @@ export default class LoginExample extends Component {
 
 	render() {
 		return (
-			<form onSubmit={this.onSubmit} >
-				<h1>Login Below!</h1>
-
-				<TextField
-					type="email"
-					name="email"
-					placeholder="Enter email"
-                    variant="outlined"
-					value={this.state.email}
-					onChange={this.handleInputChange}
-					required
-				/>
-				<TextField
-					type="password"
-					name="password"
-					placeholder="Enter password"
-                    variant="outlined"
-					value={this.state.password}
-					onChange={this.handleInputChange}
-					required
-				/>
-				<Button type="submit" value="Submit" variant="contained" color="primary">Sign In</Button> 
-			</form>
+				<form onSubmit={this.onSubmit} >
+					<h1>Login</h1>
+					<TextField
+						type="email"
+						name="email"
+						placeholder="Enter email"
+						variant="outlined"
+						value={this.state.email}
+						onChange={this.handleInputChange}
+						required
+					/>
+					<TextField
+						type="password"
+						name="password"
+						placeholder="Enter password"
+						variant="outlined"
+						value={this.state.password}
+						onChange={this.handleInputChange}
+						required
+					/>
+					<Button type="submit" value="Submit" variant="contained" color="primary" href="/">Sign In</Button> 
+				</form>
 		);
 	}
 }

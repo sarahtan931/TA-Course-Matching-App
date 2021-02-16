@@ -1,3 +1,6 @@
+body {
+  background-color: #1D3557;
+}
 ul{
   list-style-type: none;
   margin: 0;
@@ -8,8 +11,8 @@ ul{
 li {
   float: left;
   display: inline;
-  background-color: aqua;
-  color: aqua;
+  background-color: #A8DADC;
+  color: #A8DADC;
 }
 
 li a {
@@ -20,6 +23,18 @@ li a {
   text-decoration: none;
 }
 
-.active {
-  background-color: #4CAF50;
+#loginPane {
+  float: right;
+  height: 700px;
+  width: 500px;
+  margin: 2%;
+  background-color: aliceblue;
 }
+
+h1 {
+  float: left;
+  color: #A8DADC;
+}
+
+
+

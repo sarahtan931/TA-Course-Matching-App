@@ -11,7 +11,6 @@ const login = () => {
                 <TextField id="outlined-basic" label="Password" variant="outlined" />  
                 <Button type="submit" variant="contained" color="primary">Sign In</Button> 
             </form>
-            
        </div>
     );
 }
