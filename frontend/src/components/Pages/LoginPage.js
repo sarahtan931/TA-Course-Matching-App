@@ -99,6 +99,7 @@ export default class LoginPage extends Component {
 							<Link to="/register">Sign Up</Link>
 						</p>
 					</div>
+                    <p class="trademark-mini-text">Copyright @ its_works_locally 2021.</p>
 				</div>
 			</div>
 		);

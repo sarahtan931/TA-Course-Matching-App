@@ -1,15 +1,15 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
-const LoginButton = () => {
+const ContactButton = () => {
 
     return (
         <Button
 			type="submit"
-			color="primary"
 			value="Submit"
 			variant="contained"
-			href="/"
+			color="primary"
+			href="/login"
 			size="large"
 			fullWidth
 			style={{
@@ -17,9 +17,9 @@ const LoginButton = () => {
 			}}
 			// Add onClick
 		>
-            Sign In
+            Send Message
         </Button>
     );
 };
 
-export default LoginButton;
+export default ContactButton;
