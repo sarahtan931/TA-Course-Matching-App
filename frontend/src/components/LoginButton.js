@@ -9,7 +9,6 @@ const LoginButton = () => {
 			color="primary"
 			value="Submit"
 			variant="contained"
-			href="/"
 			size="large"
 			fullWidth
 			style={{

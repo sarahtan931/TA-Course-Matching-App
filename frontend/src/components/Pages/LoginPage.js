@@ -14,14 +14,16 @@ export default class LoginPage extends Component {
 
 	handleInputChange = (event) => {
 		const { value, name } = event.target;
-		this.setState({
+		this.setState({ 
 			[name]: value,
 		});
 	};
 
 	onSubmit = (event) => {
+	
 		event.preventDefault();
-		fetch("/api/auth", {
+		console.log(this.state)
+		fetch("http://localhost:3000/api/login", {
 			method: "POST",
 			body: JSON.stringify(this.state),
 			headers: {
@@ -30,7 +32,22 @@ export default class LoginPage extends Component {
 		})
 			.then((res) => {
 				if (res.status === 200) {
-					this.props.history.push("/");
+					res.json().then(function(data) {
+					localStorage.setItem('token', data.token);
+					localStorage.setItem('email', data.email);
+					localStorage.setItem('category', data.category);
+					console.log('logged in');
+					if(data.category == 'instructor'){
+					//route to instructor page	
+					}	
+					else if(data.category == 'chair'){
+					//route to chair dashboard
+					}
+					else{
+					//route to ece admin dashboard
+					}
+					})
+				
 				} else {
 					const error = new Error(res.error);
 					throw error;
@@ -38,9 +55,12 @@ export default class LoginPage extends Component {
 			})
 			.catch((err) => {
 				console.error(err);
-				alert("Error logging in please try again");
+				alert("Please input the your correct password and email");
 			});
 	};
+
+
+		
 
 	render() {
 		return (
@@ -88,6 +108,7 @@ export default class LoginPage extends Component {
 							</div>
 							<div class="login-fields">
 								<LoginButton></LoginButton>
+								
 							</div>
 						</div>
 					</form>

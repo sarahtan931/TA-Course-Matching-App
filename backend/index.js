@@ -11,6 +11,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
 app.use('/', express.static('static'))
+app.use(cors())
 
 const Course = require("./models/ece_courses.js");
 const Instructor = require("./models/instructors.js");
@@ -30,11 +31,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log("Connected")
 });
-
-/* app.use((req, res, next) => {
-  console.log(`${req.method} request for ${req.url}`);
-  next();
-}); */
 
 //login mechanism
 router.post('/auth', (req, res) => {
@@ -59,7 +55,7 @@ router.post('/login', (req, res, next) => {
      if(passportUser) {
        const user = passportUser;
        user.token = passportUser.generateJWT();
-       return res.status(200).json({ success: true, token: "Bearer " + user.token, email: user.email, category: user.cateogory });
+       return res.status(200).json({ success: true, token: "Bearer " + user.token, email: user.email, category: user.category });
      }
      return status(400).info;
    })(req, res, next);
