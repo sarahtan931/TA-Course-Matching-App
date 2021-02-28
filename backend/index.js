@@ -6,7 +6,7 @@ const passport = require('passport');
 const {check , validationResult}  = require('express-validator');
 var cors = require('cors');
 const bodyParser=require('body-parser');
-
+//this is a test
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
