@@ -57,6 +57,7 @@ const UserSchema = new Schema(
       email: this.email,
       id: this._id,
       name: this.name,
+      category: this.category,
       exp: parseInt(expirationDate.getTime() / 1000, 10),
     }, 'secret');
   }
@@ -65,6 +66,7 @@ const UserSchema = new Schema(
     return {
       _id: this._id,
       email: this.email,
+      category: this.category,
       token: 'Bearer ' + this.generateJWT(),
     };
   };
