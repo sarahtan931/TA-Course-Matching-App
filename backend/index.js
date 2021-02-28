@@ -16,7 +16,7 @@ app.use(cors())
 const Course = require("./models/ece_courses.js");
 const Instructor = require("./models/instructors.js");
 const User = require("./models/user.js");
-const TAs = require("./models/ta_applicants.js");
+const TA = require("./models/ta_applicants.js");
 const Application = require("./models/apps.js");
 require('./passportconfig');
 
@@ -200,6 +200,38 @@ router.post('/fillinstructor', (req, res, next) => {
         } else {
           output = {
             text: "Instructor added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
+});
+
+//TA
+router.post('/fillta', (req, res, next) => {
+  ta_email = req.body.email;
+  ta_name = req.body.name;
+  ta_exp = req.body.experience;
+  ta_priority = req.body.priority;
+  ta_prefer = req.body.preference;
+
+  TA.findOne(({ "email": ta_email }), function (err, user) {
+    if (user) {
+      res.status(400).send("TA already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new TA({ email: ta_email, name: ta_name, experience: ta_exp, priority: ta_priority, preference: ta_prefer})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "TA added"
           }
           res.status(200).send(output)
         }
