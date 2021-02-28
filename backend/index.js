@@ -16,7 +16,7 @@ app.use(cors())
 const Course = require("./models/ece_courses.js");
 const Instructor = require("./models/instructors.js");
 const User = require("./models/user.js");
-const TAs = require("./models/ta_applicants.js");
+const TA = require("./models/ta_applicants.js");
 const Application = require("./models/apps.js");
 require('./passportconfig');
 
@@ -177,6 +177,128 @@ router.post('/ins-prefer', (req, res, next) => {
         }
       })
 })
+
+//DATABASE FILLING FUNCTIONS
+//instructor
+router.post('/fillinstructor', (req, res, next) => {
+  in_email = req.body.email;
+  in_prefer = req.body.preference;
+
+  Instructor.findOne(({ "email": in_email }), function (err, user) {
+    if (user) {
+      res.status(400).send("Instructor already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new Instructor({ email: in_email, preference: in_prefer})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "Instructor added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
+});
+
+//TA
+router.post('/fillta', (req, res, next) => {
+  ta_email = req.body.email;
+  ta_name = req.body.name;
+  ta_exp = req.body.experience;
+  ta_priority = req.body.priority;
+  ta_prefer = req.body.preference;
+
+  TA.findOne(({ "email": ta_email }), function (err, user) {
+    if (user) {
+      res.status(400).send("TA already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new TA({ email: ta_email, name: ta_name, experience: ta_exp, priority: ta_priority, preference: ta_prefer})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "TA added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
+});
+
+//courses
+router.post('/fillcourse', (req, res, next) => {
+  cr_code = req.body.code;
+  cr_hours = req.body.hours;
+  cr_instructors = req.body.instructors;
+
+  Course.findOne(({ "code": cr_code }), function (err, user) {
+    if (user) {
+      res.status(400).send("Course already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new Course({ code: cr_code, instructors: cr_instructors, ta_hours_new: cr_hours})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "Course added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
+});
+
+//applications
+router.post('/fillapps', (req, res, next) => {
+  a_email = req.body.email;
+  a_course = req.body.course;
+  a_name = req.body.name;
+
+  Application.findOne(({ "course": a_course, "email": a_email }), function (err, user) {
+    if (user) {
+      res.status(400).send("Course already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new Application({ course: a_course, email: a_email, name: a_name})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "Application added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
+});
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);

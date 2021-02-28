@@ -12,7 +12,7 @@ const AppSchema = new mongoose.Schema(
         },
         answers: {
             type: [String],
-            required: true
+            default: null
         },
         name: {
             type: String,
