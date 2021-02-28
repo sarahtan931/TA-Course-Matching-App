@@ -238,7 +238,40 @@ router.post('/fillta', (req, res, next) => {
       })
     }
   })
+});
+
+//courses
+router.post('/fillcourse', (req, res, next) => {
+  cr_code = req.body.code;
+  cr_hours = req.body.hours;
+  cr_instructors = req.body.instructors;
+
+
+  Course.findOne(({ "code": cr_code }), function (err, user) {
+    if (user) {
+      res.status(400).send("Course already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new Course({ code: cr_code, instructors: cr_instructors, ta_hours_new: cr_hours})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "Course added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
 })
+
+
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
