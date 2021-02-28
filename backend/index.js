@@ -178,6 +178,36 @@ router.post('/ins-prefer', (req, res, next) => {
       })
 })
 
+//DATABASE FILLING FUNCTIONS
+//instructor
+router.post('/fillinstructor', (req, res, next) => {
+  in_email = req.body.email;
+  in_prefer = req.body.preference;
+
+  Instructor.findOne(({ "email": in_email }), function (err, user) {
+    if (user) {
+      res.status(400).send("Instructor already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new Instructor({ email: in_email, preference: in_prefer})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "Instructor added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
+})
+
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
