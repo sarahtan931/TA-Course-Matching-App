@@ -246,7 +246,6 @@ router.post('/fillcourse', (req, res, next) => {
   cr_hours = req.body.hours;
   cr_instructors = req.body.instructors;
 
-
   Course.findOne(({ "code": cr_code }), function (err, user) {
     if (user) {
       res.status(400).send("Course already exists")
@@ -269,9 +268,37 @@ router.post('/fillcourse', (req, res, next) => {
       })
     }
   })
-})
+});
 
+//applications
+router.post('/fillapps', (req, res, next) => {
+  a_email = req.body.email;
+  a_course = req.body.course;
+  a_name = req.body.name;
 
+  Application.findOne(({ "course": a_course, "email": a_email }), function (err, user) {
+    if (user) {
+      res.status(400).send("Course already exists")
+    }
+    else if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      entry = new Application({ course: a_course, email: a_email, name: a_name})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } else {
+          output = {
+            text: "Application added"
+          }
+          res.status(200).send(output)
+        }
+      })
+    }
+  })
+});
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
