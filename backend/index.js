@@ -179,8 +179,33 @@ router.post('/ins-prefer', (req, res, next) => {
 })
 
 router.post('/match', (req, res, next) => {
-  
+  //make course array
+  //for loop iterating through course array
+      //course = i of for loop
+      //applicants = search applications for applicants in preferences for matching course;
+      //hiring-array = call hiring prioritization, send course and applicants
+      //app-pref = call applicants, send hiring-array
+      //final-array = call instructors, send course and app-pref
+      //call matching
+  //end for loop
 })
+
+//hiring prioritization
+function hiring(course, applicants){
+  //sort course by priority (1 is high, 3 is low)
+  //get top 50% and return this array
+}
+//applicant preferences
+function applicants(course, applicants){
+  //sort by ranking (1 is high)
+  //get top 50% and return this array
+}
+//instructor preferences
+function applicant(course, applicants){
+  //sort by ranking
+  //send top x
+}
+//matching
 
 //DATABASE FILLING FUNCTIONS
 //instructor
