@@ -300,7 +300,7 @@ function assignTAs(course, applicants) {
       console.log(update)
       TA.findOneAndUpdate({ email: data.email }, { hours: update });
       Course.findOneAndUpdate({ code: course.code }, { $push: { assigned: new_data } });
-      if(hours = 0){
+      if(hours == 0){
         throw Error()
       }
     });
