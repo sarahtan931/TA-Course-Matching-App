@@ -185,24 +185,31 @@ router.get('/match', (req, res, next) => {
     //course = i of for loop
     let all_tas = [];
     all_courses.forEach(data => {
+      //search applications for applicants in preferences for matching course;
       TA.find({ "preference.code": data.code, "hours": 0 })
         .then(tas => {
-          //tas = search applications for applicants in preferences for matching course;
           all_tas.push(tas);
-          //hiring-array = call hiring prioritization, send course and applicants
-          //app-pref = call applicants, send hiring-array
-          //final-array = call instructors, send course and app-pref
-          //call matching
-          //end for loop
+          hiring_array = hiring(data, tas);
+          app_pref = applicantPreferences(data, hiring_array);
+          final_array = instructorPreferences(data, app_pref);
+          assignTAs(data, final_array);
 
         })
-        .catch(err => { console.log(err) })
-      
+        .catch(err => {
+          console.log(err)
+        });
+
     });
 
-    setTimeout(() => res.send(all_tas), 1500)
-    
+    setTimeout(() => sendMatchResults(all_tas), 1500)
+
   });
+
+  function sendMatchResults(all) {
+    Course.find({}, function (err, courses) {
+      res.send(courses)
+    })
+  }
 
 })
 
@@ -216,81 +223,85 @@ function hiring(course, applicants) {
     });
   }
 
-  return applicants.slice(0, Math.floor(applicants.length/2));
+  return applicants.slice(0, Math.floor(applicants.length / 2));
 
 }
 
 //applicant preferences
 function applicantPreferences(course, applicants) {
-  var applicantPref;
-
+  var applicantPref = [];
+  var new_applicants = Array.from(applicants);
   //sort by ranking (1 is high)
-  for (let i = 0; i < applicants.length; i++) {
-    applicants.sort(function (a, b) {
-      return a.preference.rank - b.preference.rank
-    });
-  }
+  // for (let i = 0; i < applicants.length; i++) {
+  new_applicants.sort(function (a, b) {
+    return a.preference.rank - b.preference.rank
+  });
+  //}
 
   //get top 50% and return this array
-  let arraysize = applicants.length / 2;
+  let arraysize = new_applicants.length / 2;
 
   for (let i = 0; i < arraysize; i++) {
-    applicantPref.push(applicants[i]);
+    applicantPref.push(new_applicants[i]);
   }
   return applicantPref;
 }
 
 //instructor preferences
-function instructor(course, instructors) {
-
-  var instructorPref;
+function instructorPreferences(course, instructors) {
+  var instructorPref = [];
+  let new_instructors = Array.from(instructors);
   //sort by ranking
-  for (let i = 0; i < instructors.length; i++) {
-    applicants.sort(function (a, b) {
-      return a.preference.rank - b.preference.rank
-    });
-  }
+  //for (let i = 0; i < instructors.length; i++) {
+  new_instructors.sort(function (a, b) {
+    return a.preference.rank - b.preference.rank
+  });
+  //}
   //send top x
-
+  
   return instructorPref;
 }
 
 //matching
 function assignTAs(course, applicants) {
   hours = course.ta_hours_new;
-  applicants.forEach(data => {
-    console.log(data)
-    let update = 0;
-    if(data.experience == true){
-      if(hours < 10){
-        update = hours;
-        hours = 0;
+  console.log(applicants);
+  try {
+    applicants.forEach(data => {
+      console.log(data)
+      let update = 0;
+      if (data.experience == true) {
+        if (hours < 10) {
+          update = hours;
+          hours = 0;
+        }
+        else if (hours >= 10) {
+          update = 10;
+          hours = hours - 10;
+        }
       }
-      else if (hours >= 10){
-        update = 10;
-        hours = hours - 10;
+      else {
+        if (hours < 5) {
+          hours = 0;
+        }
+        else if (hours >= 5) {
+          hours = hours - 5
+        }
       }
-    }
-    else{
-      if(hours < 5){
-        hours = 0;
-      }
-      else if(hours >= 5){
-        hours = hours - 5
-      }
-    }
 
-    new_data = {
-      name: data.email, 
-      hours: update
-    };
+      new_data = {
+        name: data.email,
+        hours: update
+      };
 
-    TA.findOneAndUpdate({email: data.email}, {hours: update});
-    Course.findOneAndUpdate({code: course.code}, {$push: {assigned: new_data}})
-    if(hours == 0){
-      break;
-    }
-  });
+      TA.findOneAndUpdate({ email: data.email }, { hours: update });
+      Course.findOneAndUpdate({ code: course.code }, { $push: { assigned: new_data } });
+      if(hours = 0){
+        throw Error()
+      }
+    });
+  } catch (e) { }
+
 }
 
 //DATABASE FILLING FUNCTIONS
