@@ -189,6 +189,7 @@ router.get('/match', (req, res, next) => {
       TA.find({ "preference.code": data.code, "hours": 0 })
         .then(tas => {
           all_tas.push(tas);
+          console.log(tas)
           hiring_array = hiring(data, tas);
           app_pref = applicantPreferences(data, hiring_array);
           final_array = instructorPreferences(data, app_pref);
@@ -258,17 +259,20 @@ function instructorPreferences(course, instructors) {
   });
   //}
   //send top x
-  
+  let arraysize = Math.ceil(course.ta_hours_new/5)
+  for (let i = 0; i < arraysize; i++) {
+    instructorPref.push(new_instructors[i]);
+  }
   return instructorPref;
 }
 
 //matching
 function assignTAs(course, applicants) {
   hours = course.ta_hours_new;
-  console.log(applicants);
+ // console.log(applicants);
   try {
     applicants.forEach(data => {
-      console.log(data)
+      //console.log(data)
       let update = 0;
       if (data.experience == true) {
         if (hours < 10) {
