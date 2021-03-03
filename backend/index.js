@@ -210,7 +210,16 @@ router.get('/match', (req, res, next) => {
 function hiring(course, applicants) {
   //sort course by priority (1 is high, 3 is low)
   //get top 50% and return this array
+  for (let i = 0; i < applicants.length; i++) {
+    applicants.sort(function (a, b) {
+      return a.priority - b.priority;
+    });
+  }
+
+  return applicants.slice(0, Math.floor(applicants.length/2));
+
 }
+
 //applicant preferences
 function applicantPreferences(course, applicants) {
   var applicantPref;
@@ -245,6 +254,7 @@ function instructor(course, instructors) {
 
   return instructorPref;
 }
+
 //matching
 function assignTAs(course, applicants) {
   hours = course.ta_hours_new;
@@ -282,6 +292,7 @@ function assignTAs(course, applicants) {
     }
   });
 }
+
 //DATABASE FILLING FUNCTIONS
 //instructor
 router.post('/fillinstructor', (req, res, next) => {
