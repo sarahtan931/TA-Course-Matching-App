@@ -188,6 +188,7 @@ router.get('/match', (req, res, next) => {
       //search applications for applicants in preferences for matching course;
       TA.find({ "preference.code": data.code, "hours": 0 })
         .then(tas => {
+          console.log(tas);
           hiring_array = hiring(data, tas);
           app_pref = applicantPreferences(data, hiring_array);
           final_array = instructorPreferences(data, app_pref);
@@ -310,9 +311,10 @@ function assignTAs(course, applicants) {
       };
       console.log(update)
       console.log(hours)
-      TA.findOneAndUpdate({ email: data.email }, { hours: update })
-      .then(data => {console.log(data)})
-      Course.updateOne({ code: course.code }, { $push: { assigned: new_data } });
+      TA.updateOne({ email: data.email }, { hours: update })
+      .then(data => {console.log("hello")})
+      Course.updateOne({ code: course.code }, { $push: { assigned: new_data } })
+      .then(console.log("hello2"))
       if(hours == 0){
         console.log('What happened')
         throw Error()
