@@ -188,8 +188,6 @@ router.get('/match', (req, res, next) => {
       //search applications for applicants in preferences for matching course;
       TA.find({ "preference.code": data.code, "hours": 0 })
         .then(tas => {
-          all_tas.push(tas);
-          console.log(tas)
           hiring_array = hiring(data, tas);
           app_pref = applicantPreferences(data, hiring_array);
           final_array = instructorPreferences(data, app_pref);
@@ -202,11 +200,11 @@ router.get('/match', (req, res, next) => {
 
     });
 
-    setTimeout(() => sendMatchResults(all_tas), 1500)
+    setTimeout(() => sendMatchResults(), 1500)
 
   });
 
-  function sendMatchResults(all) {
+  function sendMatchResults() {
     Course.find({}, function (err, courses) {
       res.send(courses)
     })
@@ -272,7 +270,7 @@ function assignTAs(course, applicants) {
  // console.log(applicants);
   try {
     applicants.forEach(data => {
-      //console.log(data)
+      console.log(data.name, course.code)
       let update = 0;
       if (data.experience == true) {
         if (hours < 10) {
@@ -286,9 +284,11 @@ function assignTAs(course, applicants) {
       }
       else {
         if (hours < 5) {
+          update = hours;
           hours = 0;
         }
         else if (hours >= 5) {
+          update = 5;
           hours = hours - 5
         }
       }
@@ -297,7 +297,7 @@ function assignTAs(course, applicants) {
         name: data.email,
         hours: update
       };
-
+      console.log(update)
       TA.findOneAndUpdate({ email: data.email }, { hours: update });
       Course.findOneAndUpdate({ code: course.code }, { $push: { assigned: new_data } });
       if(hours = 0){
