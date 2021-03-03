@@ -196,7 +196,7 @@ function hiring(course, applicants){
   //get top 50% and return this array
 }
 //applicant preferences
-function applicants(course, applicants){
+function applicantPreferences(course, applicants){
   var applicantPref;
 
    //sort by ranking (1 is high)
@@ -230,7 +230,9 @@ var instructorPref;
 return instructorPref;
 }
 //matching
+function matching(course, applicants){
 
+}
 //DATABASE FILLING FUNCTIONS
 //instructor
 router.post('/fillinstructor', (req, res, next) => {
