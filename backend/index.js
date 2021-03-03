@@ -197,13 +197,37 @@ function hiring(course, applicants){
 }
 //applicant preferences
 function applicants(course, applicants){
-  //sort by ranking (1 is high)
+  var applicantPref;
+
+   //sort by ranking (1 is high)
+  for(let i=0;i<applicants.length;i++){
+    applicants.sort(function(a,b){
+      return a.preference.rank-b.preference.rank
+    });
+  }
+
   //get top 50% and return this array
+  let arraysize=applicants.length/2;
+
+  for (let i=0;i<arraysize;i++){
+    applicantPref.push(applicants[i]);
+  }
+  return applicantPref;
 }
+
 //instructor preferences
-function applicant(course, applicants){
+function instructor(course, instructors){
+
+var instructorPref;
   //sort by ranking
+  for(let i=0;i<instructors.length;i++){
+    applicants.sort(function(a,b){
+      return a.preference.rank-b.preference.rank
+    });
+  }
   //send top x
+
+return instructorPref;
 }
 //matching
 
