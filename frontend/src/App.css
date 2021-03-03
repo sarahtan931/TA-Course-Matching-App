@@ -3,14 +3,14 @@ body, html {
   background-color: #1D3557;
 }
 
-ul{
+.nav-ul{
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #333;
 }
-li {
+.nav-li {
   float: left;
   display: inline;
   background-color: #A8DADC;
@@ -88,4 +88,56 @@ li a {
   line-height: 29px;
   color: #6B6B6B;
   mix-blend-mode: normal;
+}
+
+.dashboard-header-title {
+  color: #F1FAEE;
+}
+
+.dashboard-nav-bar {
+  margin-left: 150px;
+  overflow: hidden;
+  background-color: #F1FAEE;
+  position: fixed;
+  top: auto; 
+  width: 100%; 
+}
+
+.dashboard-nav-bar h1 {
+  float: left;
+  display: block;
+  color: #1D3557;
+  text-align: center;
+  padding: 7px 35px;
+  text-decoration: none;
+}
+
+.sidenav {
+  height: 100%;
+  width: 150px;
+  position: fixed; 
+  z-index: 1;
+  top: auto;
+  left: auto;
+  background-color: #F1FAEE;
+  overflow-x: hidden; 
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #1D3557;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #FFA62B;
+}
+
+.logout-button {
+  position: absolute;
+  bottom: 12vh;
+  left: 15px;
 }
