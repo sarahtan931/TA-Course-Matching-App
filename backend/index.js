@@ -185,10 +185,9 @@ router.get('/match', (req, res, next) => {
     //course = i of for loop
     let all_tas = [];
     all_courses.forEach(data => {
-      TA.find({ "preference.code": data.code })
+      TA.find({ "preference.code": data.code, "hours": 0 })
         .then(tas => {
           //tas = search applications for applicants in preferences for matching course;
-          console.log(data.code)
           all_tas.push(tas);
           //hiring-array = call hiring prioritization, send course and applicants
           //app-pref = call applicants, send hiring-array
@@ -248,7 +247,40 @@ function instructor(course, instructors) {
 }
 //matching
 function assignTAs(course, applicants) {
-  applicants.forEach(data => (console.log(data)))
+  hours = course.ta_hours_new;
+  applicants.forEach(data => {
+    console.log(data)
+    let update = 0;
+    if(data.experience == true){
+      if(hours < 10){
+        update = hours;
+        hours = 0;
+      }
+      else if (hours >= 10){
+        update = 10;
+        hours = hours - 10;
+      }
+    }
+    else{
+      if(hours < 5){
+        hours = 0;
+      }
+      else if(hours >= 5){
+        hours = hours - 5
+      }
+    }
+
+    new_data = {
+      name: data.email, 
+      hours: update
+    };
+
+    TA.findOneAndUpdate({email: data.email}, {hours: update});
+    Course.findOneAndUpdate({code: course.code}, {$push: {assigned: new_data}})
+    if(hours == 0){
+      break;
+    }
+  });
 }
 //DATABASE FILLING FUNCTIONS
 //instructor
