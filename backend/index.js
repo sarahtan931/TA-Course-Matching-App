@@ -222,7 +222,12 @@ function hiring(course, applicants) {
     });
   }
 
-  return applicants.slice(0, Math.floor(applicants.length / 2));
+  let arraycheck = Math.ceil(course.ta_hours_new/5)
+  if((applicants.length/2) > arraycheck){
+    return applicants.slice(0, Math.floor(applicants.length / 2));
+  } else {
+    return applicants.slice(0, applicants.length - 1)
+  }
 
 }
 
@@ -239,9 +244,15 @@ function applicantPreferences(course, applicants) {
 
   //get top 50% and return this array
   let arraysize = new_applicants.length / 2;
-
-  for (let i = 0; i < arraysize; i++) {
-    applicantPref.push(new_applicants[i]);
+  let arraycheck = Math.ceil(course.ta_hours_new/5)
+  if (arraysize > arraycheck){
+    for (let i = 0; i < arraysize; i++) {
+      applicantPref.push(new_applicants[i]);
+    }
+  } else {
+    for (let i = 0; i < arraycheck; i++) {
+      applicantPref.push(new_applicants[i]);
+    }
   }
   return applicantPref;
 }
@@ -298,13 +309,16 @@ function assignTAs(course, applicants) {
         hours: update
       };
       console.log(update)
-      TA.findOneAndUpdate({ email: data.email }, { hours: update });
-      Course.findOneAndUpdate({ code: course.code }, { $push: { assigned: new_data } });
+      console.log(hours)
+      TA.findOneAndUpdate({ email: data.email }, { hours: update })
+      .then(data => {console.log(data)})
+      Course.updateOne({ code: course.code }, { $push: { assigned: new_data } });
       if(hours == 0){
+        console.log('What happened')
         throw Error()
       }
     });
-  } catch (e) { }
+  } catch (e) { return 0;}
 
 }
 
