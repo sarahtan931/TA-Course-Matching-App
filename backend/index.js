@@ -1,6 +1,7 @@
-var express = require('express');
+var express = require("express");
 var app = express();
 var port = 3000;
+
 const mongoose = require('mongoose');
 const passport = require('passport');
 const { check, validationResult } = require('express-validator');
@@ -10,75 +11,58 @@ const bodyParser = require('body-parser');
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
-app.use('/', express.static('static'))
-app.use(cors())
+app.use("/", express.static("static"));
+app.use(cors());
 
 const Course = require("./models/ece_courses.js");
 const Instructor = require("./models/instructors.js");
 const User = require("./models/user.js");
 const TA = require("./models/ta_applicants.js");
 const Application = require("./models/apps.js");
-require('./passportconfig');
+require("./passportconfig");
 
 const router = express.Router();
 router.use(bodyParser.json());
 
-const uri = 'mongodb+srv://asamara5:3350_app@cluster1.1hkzl.mongodb.net/TA_Application?retryWrites=true&w=majority';
+const uri =
+	"mongodb+srv://asamara5:3350_app@cluster1.1hkzl.mongodb.net/TA_Application?retryWrites=true&w=majority";
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log("Connected")
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+	console.log("Connected");
 });
 
 //login mechanism
-router.post('/auth', (req, res) => {
-  console.log("Backend " + JSON.stringify(req.body));
-  return res.status(200);
+router.post("/auth", (req, res) => {
+	console.log("Backend " + JSON.stringify(req.body));
+	return res.status(200);
 });
 
 router.post('/login', (req, res, next) => {
   const user = req.body;
-
-  /* if (!user.email) {
+  
+  console.log(user.email);
+   if(!user.email) {
      return res.status(404).send('No email');
    }
-   if (!user.password) {
+   if(!user.password) {
      return res.status(404).send('no password');
    }
-   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-     if (err) {
-       return res.status('404').send('Error')
+ return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+     if(err) {
+      return res.status('404').send('Error')
      }
-     if (passportUser) {
+
+     if(passportUser) {
        const user = passportUser;
        user.token = passportUser.generateJWT();
-       return res.status(200).json({ success: true, token: "Bearer " + user.token, email: user.email, category: user.cateogory });
+       return res.status(200).json({ success: true, token: "Bearer " + user.token, email: user.email, category: user.category });
      }
      return status(400).info;
    })(req, res, next);
- }); */
-  console.log(user.email);
-  if (!user.email) {
-    return res.status(404).send('No email');
-  }
-  if (!user.password) {
-    return res.status(404).send('no password');
-  }
-  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-    if (err) {
-      return res.status('404').send('Error')
-    }
-
-    if (passportUser) {
-      const user = passportUser;
-      user.token = passportUser.generateJWT();
-      return res.status(200).json({ success: true, token: "Bearer " + user.token, email: user.email, category: user.category });
-    }
-    return status(400).info;
-  })(req, res, next);
-});
+ });
 
 //add a new user to the system and give them an authentication key
 router.post('/register', [
@@ -123,8 +107,26 @@ router.post('/setpassword', (req, res, next) => {
     user.save();
     res.send(user)
   })
+});
 
-})
+//with authentication key, new user set password
+router.post("/setpassword", (req, res, next) => {
+	email = req.body.email;
+	password = req.body.password;
+	authkey = req.body.authenticationkey;
+	User.findOne(
+		{ email: email, authenticationkey: authkey },
+		function (err, user) {
+			if (!password) {
+				return res.status(422).send("Error");
+			}
+			console.log(password);
+			user.setPassword(password);
+			user.save();
+			res.send(user);
+		}
+	);
+});
 
 //add an instructor
 router.post('/addinstructor', (req, res, next) => {
@@ -447,8 +449,7 @@ router.post('/fillapps', (req, res, next) => {
 });
 
 app.listen(port, function () {
-  console.log(`Listening on port ${port}`);
+	console.log(`Listening on port ${port}`);
 });
 
-app.use('/api', router);
-
+app.use("/api", router);

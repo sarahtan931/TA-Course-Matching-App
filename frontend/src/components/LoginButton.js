@@ -2,9 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 
 const LoginButton = () => {
-
-    return (
-        <Button
+	return (
+		<Button
 			type="submit"
 			color="primary"
 			value="Submit"
@@ -12,13 +11,12 @@ const LoginButton = () => {
 			size="large"
 			fullWidth
 			style={{
-				backgroundColor: "#FFA62B"
+				backgroundColor: "#FFA62B",
 			}}
-			// Add onClick
 		>
-            Sign In
-        </Button>
-    );
+			Sign In
+		</Button>
+	);
 };
 
 export default LoginButton;
