@@ -2,9 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 
 const ContactButton = () => {
-
-    return (
-        <Button
+	return (
+		<Button
 			type="submit"
 			value="Submit"
 			variant="contained"
@@ -13,13 +12,12 @@ const ContactButton = () => {
 			size="large"
 			fullWidth
 			style={{
-				backgroundColor: "#FFA62B"
+				backgroundColor: "#FFA62B",
 			}}
-			// Add onClick
 		>
-            Send Message
-        </Button>
-    );
+			Send Message
+		</Button>
+	);
 };
 
 export default ContactButton;

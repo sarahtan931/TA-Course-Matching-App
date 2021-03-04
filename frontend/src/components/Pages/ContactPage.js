@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import ContactButton from "../ContactButton";
 import TextField from "@material-ui/core/TextField";
-import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class ContactPage extends Component {
+	// ---------------------------------
+	// This page is currently not set up
+	// to handle any requests
+	// ---------------------------------
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,9 +25,10 @@ export default class ContactPage extends Component {
 		});
 	};
 
+	// Should not be calling / api. TO-DO
 	onSubmit = (event) => {
 		event.preventDefault();
-		fetch("/api/auth", {
+		fetch("/", {
 			method: "POST",
 			body: JSON.stringify(this.state),
 			headers: {
@@ -44,6 +50,7 @@ export default class ContactPage extends Component {
 	};
 
 	render() {
+		// Render the contact page component
 		return (
 			<div>
 				<div class="login-left">
@@ -75,7 +82,7 @@ export default class ContactPage extends Component {
 									required
 								/>
 							</div>
-                            <div class="login-fields">
+							<div class="login-fields">
 								<TextField
 									fullWidth
 									class="login-textfield"
@@ -94,9 +101,9 @@ export default class ContactPage extends Component {
 									type="text"
 									placeholder="Message"
 									variant="outlined"
-                                    style={{
-                                        top:"10vh",
-                                    }}
+									style={{
+										top: "10vh",
+									}}
 									value={this.state.password}
 									onChange={this.handleInputChange}
 									required
@@ -113,4 +120,3 @@ export default class ContactPage extends Component {
 		);
 	}
 }
-
