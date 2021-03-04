@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import LoginButton from "../LoginButton";
 import TextField from "@material-ui/core/TextField";
-import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class RegisterPage extends Component {
 	constructor(props) {
 		super(props);
+		// Create the state model that will be send to DB
 		this.state = {
 			email: "",
 			activationKey: "",
@@ -14,6 +15,7 @@ export default class RegisterPage extends Component {
 		};
 	}
 
+	// When inputs change update the state variables
 	handleInputChange = (event) => {
 		const { value, name } = event.target;
 		this.setState({
@@ -21,6 +23,7 @@ export default class RegisterPage extends Component {
 		});
 	};
 
+	// When the button is clicked this function is called on the form
 	onSubmit = (event) => {
 		event.preventDefault();
 		fetch("/api/auth", {
@@ -32,19 +35,23 @@ export default class RegisterPage extends Component {
 		})
 			.then((res) => {
 				if (res.status === 200) {
-					this.props.history.push("/");
+					// If the auth is correct, redirect to login page
+					this.props.history.push("/login");
 				} else {
+					// Throw errors
 					const error = new Error(res.error);
 					throw error;
 				}
 			})
 			.catch((err) => {
+				// More error handling, not specific just alerts
 				console.error(err);
-				alert("Error logging in please try again");
+				alert("Error registering in please try again");
 			});
 	};
 
 	render() {
+		// Rendering the register page component
 		return (
 			<div>
 				<div class="login-left">
@@ -77,7 +84,7 @@ export default class RegisterPage extends Component {
 									required
 								/>
 							</div>
-                            <div class="login-fields">
+							<div class="login-fields">
 								<TextField
 									fullWidth
 									class="login-textfield"
@@ -102,7 +109,7 @@ export default class RegisterPage extends Component {
 									required
 								/>
 							</div>
-                            <div class="login-fields">
+							<div class="login-fields">
 								<TextField
 									fullWidth
 									class="login-textfield"
@@ -126,4 +133,3 @@ export default class RegisterPage extends Component {
 		);
 	}
 }
-
