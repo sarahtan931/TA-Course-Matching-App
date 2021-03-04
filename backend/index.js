@@ -107,6 +107,7 @@ router.post('/setpassword', (req, res, next) => {
     user.save();
     res.send(user)
   })
+});
 
 //with authentication key, new user set password
 router.post("/setpassword", (req, res, next) => {
