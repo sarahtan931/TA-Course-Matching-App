@@ -73,8 +73,21 @@ class RankingPage extends Component {
     
 
   }
+  
 
   render(){
+
+    if (
+			localStorage.getItem("isAuth") != true &&
+			localStorage.getItem("category") != "instructor"
+		) {
+			this.props.history.push("/login"); // Redirect to the login page
+			return (
+				<div>
+					<h1>Redirecting...</h1>
+				</div>
+			);
+		} else {
     return(
       <div>
         <input
@@ -98,5 +111,6 @@ class RankingPage extends Component {
       </div>
     );
   }
+}
 }
 export default RankingPage;
