@@ -5,6 +5,7 @@ import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
 import MatchPage from './Pages/MatchPage';
 import UploadPage from './Pages/UploadPage';
+import RankingPage from './Pages/RankingPage';
 import InstructorDashboard from './Pages/InstructorDashboard';
  
 const Navigation = () => {
@@ -17,6 +18,7 @@ const Navigation = () => {
         <li class="nav-li"><Link to="/register">Register</Link></li>
         <li class="nav-li"><Link to="/match">Match</Link></li>
         <li class="nav-li"><Link to="/upload">Upload</Link></li>
+        <li class="nav-li"><Link to="/ranking">Ranking</Link></li>
         <li class="nav-li"><Link to="/instructor-dashboard">Instructor Dashboard</Link></li>
       </ul>
 
@@ -27,6 +29,7 @@ const Navigation = () => {
            <Route path="/match" component={MatchPage} exact/>
            <Route path="/upload" component={UploadPage} exact/>
            <Route path="/instructor-dashboard" component={InstructorDashboard} exact/>
+           <Route path="/ranking" component={RankingPage} exact/>
       </Switch>
       </BrowserRouter>
       </div> 
