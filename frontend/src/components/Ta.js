@@ -1,7 +1,8 @@
 const Ta = ({ ta }) => {
     return (
         <div>
-            {ta.name}
+            Name: {ta.name}, 
+            Hours: {ta.hours}
         </div>
     )
   }

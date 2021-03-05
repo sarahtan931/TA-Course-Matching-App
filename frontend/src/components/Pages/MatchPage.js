@@ -27,7 +27,7 @@ export default class MatchPage extends Component {
 				})
 				console.log(filteredData);
 				console.log("Setting State");
-				this.setState({ message: "Have Data", data: filteredData })
+				this.setState({ message: "Have Data", data: data })
 			})
 			.catch(error => {
 				this.setState({ errorMessage: error.toString() });
