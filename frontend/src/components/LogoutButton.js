@@ -3,6 +3,10 @@ import Button from "@material-ui/core/Button";
 
 const LogoutButton = () => {
 
+    function logout(){
+        localStorage.clear()
+    }
+
     return (
         <Button
             type="submit"
@@ -15,7 +19,7 @@ const LogoutButton = () => {
             style={{
                 backgroundColor: "#FFA62B"
             }}
-			// Add onClick
+			onClick={logout()}
 		>
             Sign Out
         </Button>
