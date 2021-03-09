@@ -141,3 +141,15 @@ li a {
   bottom: 12vh;
   left: 15px;
 }
+
+.dashboardcomp{
+  background-color:  #F1FAEE;
+  width: 87%;
+  left: 12%;
+  top: 25%;
+  height: 73%;
+  position: absolute;
+  overflow: scroll;
+}
+
+

@@ -15,8 +15,6 @@ const Navigation = () => {
         <li class="nav-li"><Link to="/">Login</Link></li>
         <li class="nav-li"><Link to="/contact">Contact</Link></li>
         <li class="nav-li"><Link to="/register">Register</Link></li>
-        <li class="nav-li"><Link to="/match">Match</Link></li>
-        <li class="nav-li"><Link to="/ranking">Ranking</Link></li>
         <li class="nav-li"><Link to="/instructor-dashboard">Instructor Dashboard</Link></li>
       </ul>
 
