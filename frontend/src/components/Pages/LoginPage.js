@@ -51,7 +51,7 @@ class LoginPage extends Component {
 								this.props.history.push("/register");
 							} else {
 								//route to ece admin dashboard
-								this.props.history.push("/");
+								this.props.history.push("/contact");
 							}
 						}.bind(this)
 					); // Needed to bind this to the non arrow func
@@ -76,7 +76,7 @@ class LoginPage extends Component {
 					<h1 class="main-title">TA Matching Application</h1>
 					<div class="login-bottom-text">
 						<Link
-							to="/"
+							to="/contact"
 							style={{
 								color: "#FFA62B",
 							}}
@@ -122,7 +122,7 @@ class LoginPage extends Component {
 					</form>
 					<div class="login-mini-text">
 						<p>
-							<Link to="/login">Forget Password?</Link>
+							<Link to="/">Forget Password?</Link>
 						</p>
 						<p>
 							<Link to="/register">Sign Up</Link>

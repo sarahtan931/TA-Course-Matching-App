@@ -57,7 +57,7 @@ export default class ContactPage extends Component {
 					<h1 class="main-title">TA Matching Application</h1>
 					<div class="login-bottom-text">
 						<Link
-							to="/login"
+							to="/"
 							style={{
 								color: "#FFA62B",
 							}}

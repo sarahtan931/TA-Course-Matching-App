@@ -36,7 +36,7 @@ export default class RegisterPage extends Component {
 			.then((res) => {
 				if (res.status === 200) {
 					// If the auth is correct, redirect to login page
-					this.props.history.push("/login");
+					this.props.history.push("/");
 				} else {
 					// Throw errors
 					const error = new Error(res.error);
@@ -58,7 +58,7 @@ export default class RegisterPage extends Component {
 					<h1 class="main-title">TA Matching Application</h1>
 					<div class="login-bottom-text">
 						<Link
-							to="/"
+							to="/contact"
 							style={{
 								color: "#FFA62B",
 							}}

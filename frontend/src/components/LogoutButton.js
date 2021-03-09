@@ -11,7 +11,7 @@ const LogoutButton = () => {
             variant="contained"
             size="large"
             fullWidth
-            href="/login"
+            href="/"
             style={{
                 backgroundColor: "#FFA62B"
             }}

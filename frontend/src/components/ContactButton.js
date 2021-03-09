@@ -8,7 +8,7 @@ const ContactButton = () => {
 			value="Submit"
 			variant="contained"
 			color="primary"
-			href="/login"
+			href="/"
 			size="large"
 			fullWidth
 			style={{

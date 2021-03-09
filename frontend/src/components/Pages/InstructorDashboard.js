@@ -8,7 +8,7 @@ export default class InstructorDashboard extends Component {
 			localStorage.getItem("isAuth") != true &&
 			localStorage.getItem("category") != "instructor"
 		) {
-			this.props.history.push("/login"); // Redirect to the login page
+			this.props.history.push("/"); // Redirect to the login page
 			return (
 				<div>
 					<h1>Redirecting...</h1>
