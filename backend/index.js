@@ -25,44 +25,44 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 const uri =
-	"mongodb+srv://asamara5:3350_app@cluster1.1hkzl.mongodb.net/TA_Application?retryWrites=true&w=majority";
+  "mongodb+srv://asamara5:3350_app@cluster1.1hkzl.mongodb.net/TA_Application?retryWrites=true&w=majority";
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
-	console.log("Connected");
+  console.log("Connected");
 });
 
 //login mechanism
 router.post("/auth", (req, res) => {
-	console.log("Backend " + JSON.stringify(req.body));
-	return res.status(200);
+  console.log("Backend " + JSON.stringify(req.body));
+  return res.status(200);
 });
 
 router.post('/login', (req, res, next) => {
   const user = req.body;
-  
-  console.log(user.email);
-   if(!user.email) {
-     return res.status(404).send('No email');
-   }
-   if(!user.password) {
-     return res.status(404).send('no password');
-   }
- return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-     if(err) {
-      return res.status('404').send('Error')
-     }
 
-     if(passportUser) {
-       const user = passportUser;
-       user.token = passportUser.generateJWT();
-       return res.status(200).json({ success: true, token: "Bearer " + user.token, email: user.email, category: user.category });
-     }
-     return status(400).info;
-   })(req, res, next);
- });
+  console.log(user.email);
+  if (!user.email) {
+    return res.status(404).send('No email');
+  }
+  if (!user.password) {
+    return res.status(404).send('no password');
+  }
+  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+    if (err) {
+      return res.status('404').send('Error')
+    }
+
+    if (passportUser) {
+      const user = passportUser;
+      user.token = passportUser.generateJWT();
+      return res.status(200).json({ success: true, token: "Bearer " + user.token, email: user.email, category: user.category });
+    }
+    return status(400).info;
+  })(req, res, next);
+});
 
 //add a new user to the system and give them an authentication key
 router.post('/register', [
@@ -111,21 +111,21 @@ router.post('/setpassword', (req, res, next) => {
 
 //with authentication key, new user set password
 router.post("/setpassword", (req, res, next) => {
-	email = req.body.email;
-	password = req.body.password;
-	authkey = req.body.authenticationkey;
-	User.findOne(
-		{ email: email, authenticationkey: authkey },
-		function (err, user) {
-			if (!password) {
-				return res.status(422).send("Error");
-			}
-			console.log(password);
-			user.setPassword(password);
-			user.save();
-			res.send(user);
-		}
-	);
+  email = req.body.email;
+  password = req.body.password;
+  authkey = req.body.authenticationkey;
+  User.findOne(
+    { email: email, authenticationkey: authkey },
+    function (err, user) {
+      if (!password) {
+        return res.status(422).send("Error");
+      }
+      console.log(password);
+      user.setPassword(password);
+      user.save();
+      res.send(user);
+    }
+  );
 });
 
 //add an instructor
@@ -195,6 +195,7 @@ router.get('/match', (req, res, next) => {
           app_pref = applicantPreferences(data, hiring_array);
           final_array = instructorPreferences(data, app_pref);
           assignTAs(data, final_array);
+          setTimeout(() => waiting(), 1000);
 
         })
         .catch(err => {
@@ -203,10 +204,13 @@ router.get('/match', (req, res, next) => {
 
     });
 
-    setTimeout(() => sendMatchResults(), 1500)
+    setTimeout(() => sendMatchResults(), 10000)
 
   });
 
+  function waiting() {
+    console.log("waiting")
+  }
   function sendMatchResults() {
     Course.find({}, function (err, courses) {
       res.send(courses)
@@ -225,18 +229,17 @@ function hiring(course, applicants) {
     });
   }
 
-  let arraycheck = Math.ceil(course.ta_hours_new/5)
-  if((applicants.length/2) > arraycheck){
-    return applicants.slice(0, Math.floor(applicants.length / 2));
-  } else {
-    return applicants.slice(0, applicants.length - 1)
+  for (let i = 0; i < applicants.length; i++) {
+    applicants[i].weight = 1;
+    applicants[i].weight = applicants[i].weight * i;
   }
+
+  return applicants;
 
 }
 
 //applicant preferences
 function applicantPreferences(course, applicants) {
-  var applicantPref = [];
   var new_applicants = Array.from(applicants);
   //sort by ranking (1 is high)
   // for (let i = 0; i < applicants.length; i++) {
@@ -245,19 +248,11 @@ function applicantPreferences(course, applicants) {
   });
   //}
 
-  //get top 50% and return this array
-  let arraysize = new_applicants.length / 2;
-  let arraycheck = Math.ceil(course.ta_hours_new/5)
-  if (arraysize > arraycheck){
-    for (let i = 0; i < arraysize; i++) {
-      applicantPref.push(new_applicants[i]);
-    }
-  } else {
-    for (let i = 0; i < arraycheck; i++) {
-      applicantPref.push(new_applicants[i]);
-    }
+  for (let i = 0; i < new_applicants.length; i++) {
+    new_applicants[i].weight = new_applicants[i].weight * i;
   }
-  return applicantPref;
+
+  return new_applicants;
 }
 
 //instructor preferences
@@ -269,19 +264,22 @@ function instructorPreferences(course, instructors) {
   new_instructors.sort(function (a, b) {
     return a.preference.rank - b.preference.rank
   });
-  //}
-  //send top x
-  let arraysize = Math.ceil(course.ta_hours_new/5)
-  for (let i = 0; i < arraysize; i++) {
-    instructorPref.push(new_instructors[i]);
+
+  for (let i = 0; i < new_instructors.length; i++) {
+    new_instructors[i].weight = new_instructors[i].weight * i;
   }
-  return instructorPref;
+
+  new_instructors.sort(function (a, b) {
+    return a.weight - b.weight;
+  });
+
+  return new_instructors;
 }
 
 //matching
 function assignTAs(course, applicants) {
   hours = course.ta_hours_new;
- // console.log(applicants);
+  // console.log(applicants);
   try {
     applicants.forEach(data => {
       console.log(data.name, course.code)
@@ -314,15 +312,24 @@ function assignTAs(course, applicants) {
       console.log(update)
       console.log(hours)
       TA.updateOne({ email: data.email }, { hours: update })
-      .then(data => {console.log("hello")})
+        .then(data => {
+
+        });
+
       Course.updateOne({ code: course.code }, { $push: { assigned: new_data } })
-      .then(console.log("hello2"))
-      if(hours == 0){
+        .then(stuff => {
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
+      if (hours == 0) {
         console.log('What happened')
         throw Error()
       }
+      return 0;
     });
-  } catch (e) { return 0;}
+  } catch (e) { return 0; }
 
 }
 
@@ -449,7 +456,7 @@ router.post('/fillapps', (req, res, next) => {
 });
 
 app.listen(port, function () {
-	console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
 
 app.use("/api", router);
