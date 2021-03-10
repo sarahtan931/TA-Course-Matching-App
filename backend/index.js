@@ -185,31 +185,49 @@ router.get('/match', (req, res, next) => {
   Course.find({}, function (err, all_courses) {
     //for loop iterating through course array
     //course = i of for loop
-    let all_tas = [];
-    all_courses.forEach(data => {
-      //search applications for applicants in preferences for matching course;
-      TA.find({ "preference.code": data.code, "hours": 0 })
-        .then(tas => {
-          console.log(tas);
-          hiring_array = hiring(data, tas);
-          app_pref = applicantPreferences(data, hiring_array);
-          final_array = instructorPreferences(data, app_pref);
-          assignTAs(data, final_array);
-          setTimeout(() => waiting(), 1000);
 
-        })
-        .catch(err => {
-          console.log(err)
-        });
+    testAwait(all_courses);
 
-    });
-
-    setTimeout(() => sendMatchResults(), 10000)
+    setTimeout(() => sendMatchResults(), 15000)
 
   });
 
-  function waiting() {
-    console.log("waiting")
+  async function testAwait(courses) {
+    const start = async () => {
+      await asyncForEach(courses, async (data) => {
+        await waitFor(1000)
+        actualMatch(data);
+      })
+      console.log('Done')
+      return 0;
+    }
+
+    start();
+  }
+
+  const waitFor = (ms) => new Promise(r => setTimeout(r, ms))
+  const asyncForEach = async (array, callback) => {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array)
+    }
+  }
+
+  async function actualMatch(data) {
+    console.log("hello")
+    TA.find({ "preference.code": data.code, "hours": 0 })
+      .then(tas => {
+        //console.log(tas);
+        hiring_array = hiring(data, tas);
+        app_pref = applicantPreferences(data, hiring_array);
+        final_array = instructorPreferences(data, app_pref);
+        assignTAs(data, final_array).then(
+          function (value) { console.log('maybe') }
+        );
+
+      })
+      .catch(err => {
+        //console.log(err)
+      });
   }
   function sendMatchResults() {
     Course.find({}, function (err, courses) {
@@ -277,59 +295,64 @@ function instructorPreferences(course, instructors) {
 }
 
 //matching
-function assignTAs(course, applicants) {
-  hours = course.ta_hours_new;
+async function assignTAs(course, applicants) {
+  let hours = course.ta_hours_new;
+  let i = 0;
   // console.log(applicants);
-  try {
-    applicants.forEach(data => {
-      console.log(data.name, course.code)
-      let update = 0;
-      if (data.experience == true) {
-        if (hours < 10) {
-          update = hours;
-          hours = 0;
-        }
-        else if (hours >= 10) {
-          update = 10;
-          hours = hours - 10;
-        }
+  while (hours > 0) {
+    data = applicants[i];
+    console.log(data.name, data.hours)
+    let update = 0;
+    if (data.experience == true) {
+      if (hours < 10) {
+        update = hours;
+        hours = 0;
       }
-      else {
-        if (hours < 5) {
-          update = hours;
-          hours = 0;
-        }
-        else if (hours >= 5) {
-          update = 5;
-          hours = hours - 5
-        }
+      else if (hours >= 10) {
+        update = 10;
+        hours = hours - 10;
       }
+    }
+    else {
+      if (hours < 5) {
+        update = hours;
+        hours = 0;
+      }
+      else if (hours >= 5) {
+        update = 5;
+        hours = hours - 5
+      }
+    }
 
-      new_data = {
-        name: data.email,
-        hours: update
-      };
-      console.log(update)
-      console.log(hours)
-      TA.updateOne({ email: data.email }, { hours: update })
-        .then(data => {
+    new_data = {
+      name: data.email,
+      hours: update
+    };
 
-        });
+    test = await updateHours(data, course, new_data, update).then(
+      function (value) { return 'success' },
+      function (error) { return 'failed' }
+    );
 
+    console.log(test);
+    i++;
+  }
+}
+
+async function updateHours(data, course, new_data, update) {
+  TA.updateOne({ email: data.email }, { hours: update })
+    .then(data => {
       Course.updateOne({ code: course.code }, { $push: { assigned: new_data } })
         .then(stuff => {
+          console.log(course.code);
+          return 0;
         })
         .catch(e => {
-          console.log(e);
+          console.log("something happened");
+          return 1;
         });
-
-      if (hours == 0) {
-        console.log('What happened')
-        throw Error()
-      }
-      return 0;
     });
-  } catch (e) { return 0; }
+
 
 }
 
