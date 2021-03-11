@@ -46,9 +46,9 @@ class LoginPage extends Component {
 							if (data.category == "instructor") {
 								// Route to the instructor dashboard
 								this.props.history.push("/instructor-dashboard");
-							} else if (data.category == "chair") {
+							} else if (data.category == "admin") {
 								//route to chair dashboard
-								this.props.history.push("/register");
+								this.props.history.push("/eceadmin-dashboard");
 							} else {
 								//route to ece admin dashboard
 								this.props.history.push("/contact");

@@ -3,18 +3,18 @@ import LogoutButton from "../LogoutButton";
 import MatchPage from './MatchPage';
 import RankingPage from './RankingPage';
 
-
-export default class InstructorDashboard extends Component {
+export default class EceAdminDashboard extends Component {
 
 	state = {
-		isRankVisible: false
+		isMatchVisible: false
+	
 	  }
 	render() {
 
 		// Check that the user is able to be on the page otherwise redirect
 		if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "instructor"
+			localStorage.getItem("category") != "admin"
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (
@@ -27,10 +27,10 @@ export default class InstructorDashboard extends Component {
 			return (
 				<div>
 					<div class="dashboard-nav-bar">
-						<h1 class="dashboard-header-title"> Course Instructor Dashboard</h1>
+						<h1 class="dashboard-header-title"> ECE Admin Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: false, isRankVisible: true })} >Match</a>
+						<a onClick={() => this.setState({ isMatchVisible: true }) }>Match</a>
 						<a href="#hours">Change Hours</a>
 						<a href="#register">Register User</a>
 						
@@ -40,7 +40,7 @@ export default class InstructorDashboard extends Component {
 						
 					</div>
 					<div class="dashboardcomp">
-							{ this.state.isRankVisible ? <RankingPage />: null }
+							{ this.state.isMatchVisible ? <MatchPage /> : null }
 						</div>
 					
 				</div>

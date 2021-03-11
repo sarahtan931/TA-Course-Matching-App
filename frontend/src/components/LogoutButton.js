@@ -8,7 +8,7 @@ const LogoutButton = () => {
     }
 
     return (
-        <button
+        <a
             type="submit"
             color="primary"
             value="Submit"
@@ -22,7 +22,7 @@ const LogoutButton = () => {
 			onClick={logout()}
 		>
             Sign Out
-        </button>
+        </a>
     );
 };
 

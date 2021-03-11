@@ -40,7 +40,7 @@ export default class MatchPage extends Component {
 	render () {
 		if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "instructor"
+			localStorage.getItem("category") != "admin"
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (

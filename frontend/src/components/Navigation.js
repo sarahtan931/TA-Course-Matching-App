@@ -6,6 +6,7 @@ import RegisterPage from './Pages/RegisterPage';
 import MatchPage from './Pages/MatchPage';
 import RankingPage from './Pages/RankingPage';
 import InstructorDashboard from './Pages/InstructorDashboard';
+import EceAdminDashboard from './Pages/EceAdminDashboard';
  
 const Navigation = () => {
     return (
@@ -16,6 +17,7 @@ const Navigation = () => {
         <li class="nav-li"><Link to="/contact">Contact</Link></li>
         <li class="nav-li"><Link to="/register">Register</Link></li>
         <li class="nav-li"><Link to="/instructor-dashboard">Instructor Dashboard</Link></li>
+        <li class="nav-li"><Link to="/eceadmin-dashboard">ECE Admin Dashboard</Link></li>
       </ul>
 
       <Switch>
@@ -25,6 +27,7 @@ const Navigation = () => {
            <Route path="/match" component={MatchPage} exact/>
            <Route path="/instructor-dashboard" component={InstructorDashboard} exact/>
            <Route path="/ranking" component={RankingPage} exact/>
+           <Route path='/eceadmin-dashboard' component={EceAdminDashboard}/>
       </Switch>
       </BrowserRouter>
       </div> 
