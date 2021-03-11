@@ -94,28 +94,25 @@ router.post('/register', [
   }
 });
 
+// save instructor applicants from ranked excel sheet
 router.post('/save', (req, res, next) => {
-  data = req.body;
-  console.log(data);
-
-  appsByCourse = underscore.sortBy(data, 'Course Code')
-
-  appsByCourse.forEach(apps => {
-    Course.findOne(({"code": apps[0]["Course Code"]}), function (err, course) {
-      course.instrucors.forEach(prof => {
-        Instructor.updateOne({email: prof}, { $set: {preference: apps}}, function(err, result) {
-          if (error) {
+  const app = req.body;
+  Course.findOne(({"code": app.code.toLowerCase()}), function(err, course) {
+    if (course) {
+      course.instructors.forEach(prof => {
+        Instructor.updateOne({email: prof}, { $push: { preference: app }}, function(err, result) {
+          if (err) {
             console.log(err)
             res.status(400).send("ERROR: Could not update instructor preference.")
           } else {
             console.log("SUCCESS: Updated instructor preferences.");
           }
         })
-      });
-    });
+      })
+    } else {
+      res.status(400).send("Cannot find course.");
+    };
   });
-  // populat instructor preferences with new users
-  // pass in the excel object with all users
 })
 
 //with authentication key, new user set password 

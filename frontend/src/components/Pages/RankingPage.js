@@ -4,6 +4,8 @@ import * as ReactBootStrap from "react-bootstrap";
 import { render } from "@testing-library/react";
 import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import ReactToExcel from 'react-html-table-to-excel';
+var underscore = require("underscore");
+
 
 class RankingPage extends Component {
 
@@ -72,15 +74,28 @@ class RankingPage extends Component {
     document.getElementById('body').innerHTML = s.toString().replace(/,/g,"");
 
     console.log(this.information);
+    let appsByCourse = underscore.groupBy(this.information, 'Course Code');
+    console.log(appsByCourse);
+    for (var course in appsByCourse) {
+          appsByCourse[course].forEach(app => {
+            fetch("http://localhost:3000/api/save", {
+            // Creates a post call with the state info
+            method: "POST",
+            body: JSON.stringify({
+              code: app["Course Code"],
+              name: app["Applicant Name"] ,
+              email: app["Applicant email"] ,
+              rank: 0
+            }),
+            headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3001"
+          },
+        })
+      });
+    };
 
-    fetch("http://localhost:3000/api/save", {
-			// Creates a post call with the state info
-			method: "POST",
-			body: this.information,
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
+    
   } 
 
   render(){
