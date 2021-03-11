@@ -188,14 +188,14 @@ router.get('/match', (req, res, next) => {
 
     testAwait(all_courses);
 
-    setTimeout(() => sendMatchResults(), 15000)
+    setTimeout(() => sendMatchResults(), 5000)
 
   });
 
   async function testAwait(courses) {
     const start = async () => {
       await asyncForEach(courses, async (data) => {
-        await waitFor(1000)
+        await waitFor(500)
         actualMatch(data);
       })
       console.log('Done')
@@ -213,20 +213,18 @@ router.get('/match', (req, res, next) => {
   }
 
   async function actualMatch(data) {
-    console.log("hello")
     TA.find({ "preference.code": data.code, "hours": 0 })
       .then(tas => {
-        //console.log(tas);
         hiring_array = hiring(data, tas);
         app_pref = applicantPreferences(data, hiring_array);
         final_array = instructorPreferences(data, app_pref);
         assignTAs(data, final_array).then(
-          function (value) { console.log('maybe') }
+          function (value) { console.log(value) }
         );
 
       })
       .catch(err => {
-        //console.log(err)
+        console.log(err)
       });
   }
   function sendMatchResults() {
@@ -240,7 +238,6 @@ router.get('/match', (req, res, next) => {
 //hiring prioritization
 function hiring(course, applicants) {
   //sort course by priority (1 is high, 3 is low)
-  //get top 50% and return this array
   for (let i = 0; i < applicants.length; i++) {
     applicants.sort(function (a, b) {
       return a.priority - b.priority;
