@@ -93,6 +93,10 @@ router.post('/register', [
   }
 });
 
+router.post('/save', (req, res, next) => {
+  // pass in the excel object with all users
+})
+
 //with authentication key, new user set password 
 router.post('/setpassword', (req, res, next) => {
   email = req.body.email;
