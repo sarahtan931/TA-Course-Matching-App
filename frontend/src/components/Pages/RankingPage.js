@@ -57,7 +57,7 @@ class RankingPage extends Component {
       if(a['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] > b['Applicant status ( 1- Fundable, 2-NotFundable,3-External)']) return 1;
       if(a['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] < b['Applicant status ( 1- Fundable, 2-NotFundable,3-External)']) return -1;
       return 0;
-  });
+    });
 
     let s = this.sort.map((oneObject, index) =>{
       return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td><select id = "'+index+'"><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option><option value = "5">5</option><option value = "6">6</option><option value = "7">7</option><option value = "8">8</option><option value = "9">9</option><option value = "10">10</option></select></td></tr>';
@@ -69,11 +69,17 @@ class RankingPage extends Component {
     let s = this.information.map((oneObject, index) =>{
       return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td>' + document.getElementById(index.toString()).value + '</td></tr>'
     });
-    document.getElementById('body').innerHTML = s.toString().replace(/,/g,"");;
+    document.getElementById('body').innerHTML = s.toString().replace(/,/g,"");
     
-
-  }
-  
+    fetch("http://localhost:3000/api/login", {
+			// Creates a post call with the state info
+			method: "POST",
+			body: JSON.stringify(this.state),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+  } 
 
   render(){
 
