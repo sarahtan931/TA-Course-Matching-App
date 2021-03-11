@@ -70,11 +70,13 @@ class RankingPage extends Component {
       return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td>' + document.getElementById(index.toString()).value + '</td></tr>'
     });
     document.getElementById('body').innerHTML = s.toString().replace(/,/g,"");
-    
-    fetch("http://localhost:3000/api/login", {
+
+    console.log(this.information);
+
+    fetch("http://localhost:3000/api/save", {
 			// Creates a post call with the state info
 			method: "POST",
-			body: JSON.stringify(this.state),
+			body: this.information,
 			headers: {
 				"Content-Type": "application/json",
 			},

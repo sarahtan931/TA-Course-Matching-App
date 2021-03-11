@@ -1,4 +1,5 @@
 var express = require("express");
+var underscore = require("underscore");
 var app = express();
 var port = 3000;
 
@@ -94,6 +95,26 @@ router.post('/register', [
 });
 
 router.post('/save', (req, res, next) => {
+  data = req.body;
+  console.log(data);
+
+  appsByCourse = underscore.sortBy(data, 'Course Code')
+
+  appsByCourse.forEach(apps => {
+    Course.findOne(({"code": apps[0]["Course Code"]}), function (err, course) {
+      course.instrucors.forEach(prof => {
+        Instructor.updateOne({email: prof}, { $set: {preference: apps}}, function(err, result) {
+          if (error) {
+            console.log(err)
+            res.status(400).send("ERROR: Could not update instructor preference.")
+          } else {
+            console.log("SUCCESS: Updated instructor preferences.");
+          }
+        })
+      });
+    });
+  });
+  // populat instructor preferences with new users
   // pass in the excel object with all users
 })
 
