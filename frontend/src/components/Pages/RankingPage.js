@@ -4,6 +4,8 @@ import * as ReactBootStrap from "react-bootstrap";
 import { render } from "@testing-library/react";
 import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import ReactToExcel from 'react-html-table-to-excel';
+var underscore = require("underscore");
+
 
 class RankingPage extends Component {
 
@@ -57,7 +59,7 @@ class RankingPage extends Component {
       if(a['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] > b['Applicant status ( 1- Fundable, 2-NotFundable,3-External)']) return 1;
       if(a['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] < b['Applicant status ( 1- Fundable, 2-NotFundable,3-External)']) return -1;
       return 0;
-  });
+    });
 
     let s = this.sort.map((oneObject, index) =>{
       return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td><select id = "'+index+'"><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option><option value = "5">5</option><option value = "6">6</option><option value = "7">7</option><option value = "8">8</option><option value = "9">9</option><option value = "10">10</option></select></td></tr>';
@@ -69,11 +71,32 @@ class RankingPage extends Component {
     let s = this.information.map((oneObject, index) =>{
       return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td>' + document.getElementById(index.toString()).value + '</td></tr>'
     });
-    document.getElementById('body').innerHTML = s.toString().replace(/,/g,"");;
-    
+    document.getElementById('body').innerHTML = s.toString().replace(/,/g,"");
 
-  }
-  
+    console.log(this.information);
+    let appsByCourse = underscore.groupBy(this.information, 'Course Code');
+    console.log(appsByCourse);
+    for (var course in appsByCourse) {
+          appsByCourse[course].forEach(app => {
+            fetch("http://localhost:3000/api/save", {
+            // Creates a post call with the state info
+            method: "POST",
+            body: JSON.stringify({
+              code: app["Course Code"],
+              name: app["Applicant Name"] ,
+              email: app["Applicant email"] ,
+              rank: 0
+            }),
+            headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3001"
+          },
+        })
+      });
+    };
+
+    
+  } 
 
   render(){
 

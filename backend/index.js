@@ -1,4 +1,5 @@
 var express = require("express");
+var underscore = require("underscore");
 var app = express();
 var port = 3000;
 
@@ -92,6 +93,27 @@ router.post('/register', [
     })
   }
 });
+
+// save instructor applicants from ranked excel sheet
+router.post('/save', (req, res, next) => {
+  const app = req.body;
+  Course.findOne(({"code": app.code.toLowerCase()}), function(err, course) {
+    if (course) {
+      course.instructors.forEach(prof => {
+        Instructor.updateOne({email: prof}, { $push: { preference: app }}, function(err, result) {
+          if (err) {
+            console.log(err)
+            res.status(400).send("ERROR: Could not update instructor preference.")
+          } else {
+            console.log("SUCCESS: Updated instructor preferences.");
+          }
+        })
+      })
+    } else {
+      res.status(400).send("Cannot find course.");
+    };
+  });
+})
 
 //with authentication key, new user set password 
 router.post('/setpassword', (req, res, next) => {
