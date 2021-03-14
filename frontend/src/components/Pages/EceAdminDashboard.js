@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import LogoutButton from "../LogoutButton";
 import MatchPage from './MatchPage';
 import RankingPage from './RankingPage';
+import CalcCourseHours from './CalcCourseHours';
 
 export default class EceAdminDashboard extends Component {
 
 	state = {
-		isMatchVisible: false
+		isMatchVisible: false,
+		isHoursVisible: false
 	
 	  }
 	render() {
@@ -30,8 +32,8 @@ export default class EceAdminDashboard extends Component {
 						<h1 class="dashboard-header-title"> ECE Admin Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true }) }>Match</a>
-						<a href="#hours">Change Hours</a>
+						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false }) }>Match</a>
+						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false }) }>Calculate Course Hours</a>
 						<a href="#register">Register User</a>
 						
 						<div class="logout-button">
@@ -41,6 +43,7 @@ export default class EceAdminDashboard extends Component {
 					</div>
 					<div class="dashboardcomp">
 							{ this.state.isMatchVisible ? <MatchPage /> : null }
+							{ this.state.isHoursVisible ? <CalcCourseHours/>: null}
 						</div>
 					
 				</div>

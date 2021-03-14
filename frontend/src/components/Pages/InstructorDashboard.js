@@ -30,7 +30,7 @@ export default class InstructorDashboard extends Component {
 						<h1 class="dashboard-header-title"> Course Instructor Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: false, isRankVisible: true })} >Match</a>
+						<a onClick={() => this.setState({ isRankVisible: true })} >Rank</a>
 						<a href="#hours">Change Hours</a>
 						<a href="#register">Register User</a>
 						
