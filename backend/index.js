@@ -497,6 +497,51 @@ router.post('/fillapps', (req, res, next) => {
   })
 });
 
+//save new ta hours (based on the calculation)
+router.post('/saveHours',(req,res,next)=>{
+  new_hours = req.body.ta_hours_new;
+  old_hours = req.body.ta_hours_old;
+  new_enroll= req.body.enroll_new;
+  old_enroll=req.body.enroll_old;
+  courseCode=req.body.code;
+
+Course.findOne(({"code":courseCode}),function(err,crs){
+  if(crs){
+Course.updateOne({"code":courseCode},{$push: { ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll}});
+    output1 = {
+      text: "Updated course"
+    }
+    res.status(200).send(output1);
+  }
+  else if(err){
+    console.log(err);
+    res.status(400).send(err);
+  }
+  else{
+
+    entry1 = new Course({ code: courseCode, ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll})
+    entry1.save();
+
+    output2 = {
+      text: "Course added to database"
+    }
+    res.status(200).send(output2);
+  }
+
+});
+
+});
+
+//clear matching
+router.post('/clearmatching', (req, res, next) => {
+
+//assigned array in courses schema
+//do you need to increment the ta hours needed for course in courses schema?
+//set hours to 0 in ta_applicants schema
+
+});
+
+
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
