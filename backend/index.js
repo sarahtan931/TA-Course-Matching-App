@@ -545,8 +545,16 @@ Course.findOne(({"code":courseCode}),function(err,crs){
 router.post('/clearmatching', (req, res, next) => {
 
 //assigned array in courses schema
-//do you need to increment the ta hours needed for course in courses schema?
+Course.updateMany({},{$push:{assigned:[]}});
 //set hours to 0 in ta_applicants schema
+TA.updateMany({},{$push:{hours:0}});
+;
+
+output3 = {
+  text: "Assigned database entries cleared"
+}
+
+res.status(200).send(output3);
 
 });
 
