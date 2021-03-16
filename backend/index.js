@@ -508,11 +508,16 @@ router.post('/saveHours',(req,res,next)=>{
 
 Course.findOne(({"code":courseCode}),function(err,crs){
   if(crs){
-Course.updateOne({"code":courseCode},{$push: { ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll}}, function(err1, result1) {
+    crs.ta_hours_new = new_hours;
+    crs.ta_hours_old = old_hours;
+    crs.enroll_old = old_enroll;
+    crs.enroll_new = new_enroll;
+    crs.save()
+/*Course.updateOne({"code":courseCode},{$push: { ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll}}, function(err1, result1) {
   if(err1){
     console.log(err1)
   }
-});
+});*/
     output1 = {
       text: "Updated course"
     } 

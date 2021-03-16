@@ -100,7 +100,13 @@ class CalcCourseHours extends Component {
         fetch("http://localhost:3000/api/saveHours", {
             // Creates a post call with the state info
         method: "POST",
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          code: app["code"],
+          ta_hours_old: app['ta_hours_old'],
+          ta_hours_new: app['ta_hours_new'],
+          enroll_old: app['enroll_old'],
+          enroll_new: app['enroll_new']
+        }),
             headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "http://localhost:3001"
