@@ -39,6 +39,10 @@ const TASchema = new mongoose.Schema(
         preference: {
             type: [PreferCourse],
             default: null
+        },
+        accepted: {
+            type: Boolean,
+            default: false
         }
     },
     { strict: false }

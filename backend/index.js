@@ -375,6 +375,13 @@ async function updateHours(data, course, new_data, update) {
 
 }
 
+
+//accept ta matches
+router.post('/accept', (req, res, next) => {
+  let ta = req.body.ta;
+  let course = req.body.course;
+  let isAccepted = req.body.accept;
+});
 //DATABASE FILLING FUNCTIONS
 //instructor
 router.post('/fillinstructor', (req, res, next) => {
