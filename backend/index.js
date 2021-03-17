@@ -370,10 +370,7 @@ async function updateHours(data, course, new_data, update) {
           return 1;
         });
     });
-
-
 }
-
 
 //accept ta matches
 router.post('/accept', (req, res, next) => {
@@ -400,6 +397,62 @@ router.post('/accept', (req, res, next) => {
 
   res.status(200).send("success")
   
+});
+
+//manually remove a TA
+router.post('/remove_ta', (req, res, next) => {
+  ta = req.body.ta;
+  course = req.body.course;
+
+  TA.updateOne({email: ta}, {hours: 0})
+    .catch(err => {
+      res.status(404).send("something went wrong")
+    })
+    Course.updateOne({ code: course}, {$pull: {assigned: {name: ta}}})
+    .catch(err => {
+      res.status(404).send("something went wrong")
+    })
+
+  res.status(200).send("success")
+});
+
+//manually add a TA
+router.post('/add_ta', (req, res, next) => {
+  ta = req.body.ta;
+  course = req.body.course;
+  hours = req.body.hours;
+
+  new_data = {
+    name: ta,
+    hours: hours
+  }
+
+  TA.findOne({email: ta})
+  .then(data => {
+    if(!data){
+      entry = new TA({ email: ta, hours: hours, accepted: true})
+      entry.save(function (err) {
+        if (err) {
+          console.log(err)
+          res.status(400).send("Something went wrong")
+        } 
+      });
+    } else {
+      TA.updateOne({email: ta}, {hours: hours})
+      .catch(err => {
+        res.status(404).send("something went wrong")
+      })
+    }
+
+    Course.updateOne({ code: course}, {$push: {assigned: new_data}})
+    .then(stuff => {
+      res.status(200).send("successfully added")
+    })
+    .catch(err => {
+      res.status(404).send("something went wrong")
+    })
+
+  })
 });
 //DATABASE FILLING FUNCTIONS
 //instructor
