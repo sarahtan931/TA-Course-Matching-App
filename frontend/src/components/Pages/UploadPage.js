@@ -7,7 +7,7 @@ import ReactToExcel from 'react-html-table-to-excel';
 var underscore = require("underscore");
 
 
-class RankingPage extends Component {
+class UploadPage extends Component {
 
   SAVE = '<button id = "save">Save</button>';
 
@@ -136,4 +136,4 @@ class RankingPage extends Component {
   }
 }
 }
-export default RankingPage;
+export default UploadPage;

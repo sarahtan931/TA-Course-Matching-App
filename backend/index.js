@@ -202,6 +202,19 @@ router.post('/ins-prefer', (req, res, next) => {
     })
 })
 
+// get instructor
+router.get('/instructor', (req, res, next) => {
+  const email = req.body.email;
+  Instructor.find({email: email})
+    .then(data => {
+      if (data) {
+        res.status(200).send({message: "Success"});
+      } else {
+        res.status(404).send("Instructor not found");
+      }
+    })
+})
+
 router.get('/match', (req, res, next) => {
   //make course array
   Course.find({}, function (err, all_courses) {

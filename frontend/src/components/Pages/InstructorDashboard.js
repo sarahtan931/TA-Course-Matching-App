@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import LogoutButton from "../LogoutButton";
 import MatchPage from './MatchPage';
-import RankingPage from './RankingPage';
+import UploadPage from './UploadPage';
+import RankPage from './RankPage';
 
 
 
@@ -9,7 +10,9 @@ export default class InstructorDashboard extends Component {
 
 	state = {
 		isMatchVisible: false,
+		isUploadVisible: false,
 		isRankVisible: false
+
 	  }
 	render() {
 
@@ -32,8 +35,9 @@ export default class InstructorDashboard extends Component {
 						<h1 class="dashboard-header-title"> Course Instructor Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true, isRankVisible: false }) }>Match</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isRankVisible: true })} >Rank</a>
+						<a onClick={() => this.setState({ isMatchVisible: true, isUploadVisible: false, isRankVisible: false }) }>Match</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: true, isRankVisible: false })} >Upload</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: true })} >Rank</a>
 						<a href="#hours">Change Hours</a>
 						<a href="#register">Register User</a>
 						
@@ -44,7 +48,8 @@ export default class InstructorDashboard extends Component {
 					</div>
 					<div class="dashboardcomp">
 							{ this.state.isMatchVisible ? <MatchPage /> : null }
-							{ this.state.isRankVisible ? <RankingPage />: null }
+							{ this.state.isUploadVisible ? <UploadPage />: null }
+							{ this.state.isRankVisible ? <RankPage />: null }
 						</div>
 					
 				</div>
