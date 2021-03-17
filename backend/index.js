@@ -1,5 +1,4 @@
 var express = require("express");
-var underscore = require("underscore");
 var app = express();
 var port = 3000;
 
@@ -381,6 +380,26 @@ router.post('/accept', (req, res, next) => {
   let ta = req.body.ta;
   let course = req.body.course;
   let isAccepted = req.body.accept;
+
+  if(isAccepted){
+    TA.updateOne({ email: ta }, { accepted: isAccepted})
+    .then(data => {console.log(data)})
+    .catch(err => {
+      res.status(404).send("something went wrong")
+    })
+  } else if (!isAccepted){
+    TA.updateOne({email: ta}, {hours: 0})
+    .catch(err => {
+      res.status(404).send("something went wrong")
+    })
+    Course.updateOne({ code: course}, {$pull: {assigned: {name: ta}}})
+    .catch(err => {
+      res.status(404).send("something went wrong")
+    })
+  }
+
+  res.status(200).send("success")
+  
 });
 //DATABASE FILLING FUNCTIONS
 //instructor
