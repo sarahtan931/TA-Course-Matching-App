@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 var underscore = require("underscore");
 
 
-class RankingPage extends Component {
+class UploadPage extends Component {
 
   SAVE = '<Button id = "save">Save</Button>';
 
@@ -141,4 +141,4 @@ class RankingPage extends Component {
   }
 }
 }
-export default RankingPage;
+export default UploadPage;

@@ -201,6 +201,20 @@ router.post('/ins-prefer', (req, res, next) => {
     })
 })
 
+// get instructor
+router.get('/:instructor', (req, res, next) => {
+  console.log(req.params.instructor);
+  const email = req.params.instructor;
+  Instructor.find({email: email}, function (err, data) {
+      if (data) {
+        console.log(data);
+        res.send(data);
+      } else {
+        res.status(404).send("Instructor not found.");
+      }
+    })
+})
+
 router.get('/match', (req, res, next) => {
   //make course array
   Course.find({}, function (err, all_courses) {
@@ -454,6 +468,21 @@ router.post('/add_ta', (req, res, next) => {
 
   })
 });
+router.post('/saveinstructor', (req, res, next) => {
+  const instructor = req.body.instructor;
+
+  Instructor.updateOne({email: instructor.email}, function (err, result) {
+    if (err) {
+      console.log(err)
+      res.status(400).send("Something went wrong")
+    } else {
+      output = {
+        text: "Successfully updated instructor preferences"
+      } 
+    }
+  })
+});
+
 //DATABASE FILLING FUNCTIONS
 //instructor
 router.post('/fillinstructor', (req, res, next) => {
