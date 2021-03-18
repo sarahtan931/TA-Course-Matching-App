@@ -3,6 +3,7 @@ import LoginButton from "../LoginButton";
 import TextField from "@material-ui/core/TextField";
 import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
 import Course from "../Course"
+import Button from "@material-ui/core/Button";
 
 export default class MatchPage extends Component {	
 	constructor(props) {
@@ -70,11 +71,23 @@ export default class MatchPage extends Component {
 
             <div>		
 				<h1>{window.localStorage.getItem('email')}</h1>		
-				<button onClick={this.getMatches} class="twoToneButton">
+				<Button type="submit"
+				color="primary"
+				value="Submit"
+				variant="contained"
+				size="large"
+				fullWidth 
+				onClick={this.getMatches}>
 					Match
-				</button>
+				</Button>
 				<div class="loader" id="load"></div>
-				<button id = "save" onClick = {this.clearMatch}>Clear Match</button>
+				<button 
+				color="primary"
+				value="Submit"
+				variant="contained"
+				size="large"
+				fullWidth 
+				id = "save" onClick = {this.clearMatch}>Clear Match</button>
 				<div>
 					{this.state.message}
 				</div>					

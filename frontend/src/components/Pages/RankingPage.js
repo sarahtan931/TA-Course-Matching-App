@@ -4,12 +4,13 @@ import * as ReactBootStrap from "react-bootstrap";
 import { render } from "@testing-library/react";
 import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import ReactToExcel from 'react-html-table-to-excel';
+import Button from "@material-ui/core/Button";
 var underscore = require("underscore");
 
 
 class RankingPage extends Component {
 
-  SAVE = '<button id = "save">Save</button>';
+  SAVE = '<Button id = "save">Save</Button>';
 
   constructor(props){
     super(props);
@@ -62,7 +63,7 @@ class RankingPage extends Component {
     });
 
     let s = this.sort.map((oneObject, index) =>{
-      return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td><select id = "'+index+'"><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option><option value = "5">5</option><option value = "6">6</option><option value = "7">7</option><option value = "8">8</option><option value = "9">9</option><option value = "10">10</option></select></td></tr>';
+      return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['Applicant Email'] + '</td><td>'+ oneObject['Applicant status ( 1-Fundable, 2-NotFundable, 3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td><select id = "'+index+'"><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option><option value = "5">5</option><option value = "6">6</option><option value = "7">7</option><option value = "8">8</option><option value = "9">9</option><option value = "10">10</option></select></td></tr>';
     });
     return s.toString().replace(/,/g,"");
   }
@@ -70,7 +71,7 @@ class RankingPage extends Component {
 
   save = () => {
     let s = this.information.map((oneObject, index) =>{
-      return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td>' + document.getElementById(index.toString()).value + '</td></tr>'
+      return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+ oneObject['Applicant Email'] + '</td><td>'+ oneObject['Applicant status ( 1-Fundable, 2-NotFundable, 3-External)'] + '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] + '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td><td>' + document.getElementById(index.toString()).value + '</td></tr>'
     });
     document.getElementById('body').innerHTML = s.toString().replace(/,/g,"");
 
@@ -116,6 +117,7 @@ class RankingPage extends Component {
       <div>
         <input
         type="file"
+        class="button-download"
         onChange={(e) => {
           const file = e.target.files[0];
           this.readExcel(file);
@@ -129,9 +131,11 @@ class RankingPage extends Component {
         </tbody>
         </ReactBootStrap.Table>
         <div id = 'but'>
-          <button id = "save" onClick = {this.save}>Save</button>
+          <button color="primary"
+          class="button-download"
+          id = "save" onClick = {this.save}>Save</button>
         </div>
-        <ReactToExcel className='btn' table = 'excelTable' fileName = 'excelFile' sheet = 'sheet 1' buttonText = 'Export Table as Excel'/>
+        <ReactToExcel table = 'excelTable' fileName = 'excelFile' sheet = 'sheet 1' buttonText = 'Export Table as Excel'/>
       </div>
     );
   }

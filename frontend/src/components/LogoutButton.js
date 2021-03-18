@@ -2,13 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 
 const LogoutButton = () => {
-
-    function logout(){
-     
-    }
-
     return (
-        <a
+        <Button
             type="submit"
             color="primary"
             value="Submit"
@@ -19,10 +14,9 @@ const LogoutButton = () => {
             style={{
                 backgroundColor: "#FFA62B"
             }}
-			onClick={logout()}
 		>
             Sign Out
-        </a>
+        </Button>
     );
 };
 

@@ -139,15 +139,15 @@ li a {
 .logout-button {
   position: absolute;
   bottom: 12vh;
-  left: 15px;
+  left: 10px
 }
 
 .dashboardcomp{
-  background-color:  #F1FAEE;
-  width: 87%;
-  left: 12%;
-  top: 25%;
-  height: 73%;
+  background-color:  #1D3557;
+  width: calc( 100% - 151px );
+  left: 151px;
+  top: 19vh;
+  height: 81vh;
   position: absolute;
   overflow: scroll;
 }
@@ -167,3 +167,25 @@ li a {
   100% { transform: rotate(360deg); }
 }
 
+.button-download {
+	background-color:#FFA62B;
+  border: #FFA62B;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	padding:10px 30px;
+  margin: 5px;
+	text-decoration:none;
+}
+
+td{
+  color: white;
+  border: 1px solid #FFA62B;
+}
+
+tr{
+  color: #FFA62B;
+}
