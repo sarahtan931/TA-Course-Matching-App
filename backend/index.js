@@ -203,14 +203,15 @@ router.post('/ins-prefer', (req, res, next) => {
 })
 
 // get instructor
-router.get('/instructor', (req, res, next) => {
-  const email = req.body.email;
-  Instructor.find({email: email})
-    .then(data => {
+router.get('/:instructor', (req, res, next) => {
+  console.log(req.params.instructor);
+  const email = req.params.instructor;
+  Instructor.find({email: email}, function (err, data) {
       if (data) {
-        res.status(200).send({message: "Success"});
+        console.log(data);
+        res.send(data);
       } else {
-        res.status(404).send("Instructor not found");
+        res.status(404).send("Instructor not found.");
       }
     })
 })

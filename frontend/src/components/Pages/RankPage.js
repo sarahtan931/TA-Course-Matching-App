@@ -15,13 +15,13 @@ export default class RankPage extends Component {
 
     // get instrucotr preferences
 	getInstructor = () => {
-		fetch("http://localhost:3000/api/instructor", {email: localStorage.getItem("email")})
+		fetch(`http://localhost:3000/api/lstrawb@uwo.ca`)
 			.then(async response => {
-				console.log(response.message);
+				const data = await response.json();
+				console.log(data);
 			})
 			.catch(error => {
-				this.setState({ errorMessage: error.toString() });
-				console.log("Error: ", error);
+				console.log("Error: " + error);
 			})
 		
 		
@@ -30,7 +30,7 @@ export default class RankPage extends Component {
 	render () {
         return (
             <div>
-                <button onClick={this.getMatches}>
+                <button onClick={this.getInstructor}>
 					Test
 				</button>
             </div>
