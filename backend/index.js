@@ -362,6 +362,21 @@ function assignTAs(course, applicants) {
 
 }
 
+router.post('/saveinstructor', (req, res, next) => {
+  const instructor = req.body.instructor;
+
+  Instructor.updateOne({email: instructor.email}, function (err, result) {
+    if (err) {
+      console.log(err)
+      res.status(400).send("Something went wrong")
+    } else {
+      output = {
+        text: "Successfully updated instructor preferences"
+      } 
+    }
+  })
+});
+
 //DATABASE FILLING FUNCTIONS
 //instructor
 router.post('/fillinstructor', (req, res, next) => {
