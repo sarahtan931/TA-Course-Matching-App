@@ -19,6 +19,10 @@ class CalcCourseHours extends Component {
     this.sort = [];
     this.final = [];
     this.flag = false;
+    this.state = {
+			message: ""
+		};	
+    
   }
 
   readExcel = (file) => {
@@ -81,6 +85,8 @@ class CalcCourseHours extends Component {
       this.newinfo = newbody;
       console.log('The new body')
       console.log(this.newinfo);
+
+      this.setState({ message: "Hours Calculated" })
    
   }
 
@@ -113,6 +119,9 @@ class CalcCourseHours extends Component {
           },
         })
       });
+
+      
+      this.setState({ message: "Hours Saved"})
     }; 
  // } 
 
@@ -148,6 +157,9 @@ class CalcCourseHours extends Component {
         <div id = 'but'>
           <button id = "save" onClick = {this.calcHours}>Calculate Hours</button>
           <button id = "save" onClick = {this.save}>Save</button>
+          <div>
+					{this.state.message}
+				</div>
         </div>
         <ReactToExcel className='btn' table = 'excelTable' fileName = 'excelFile' sheet = 'sheet 1' buttonText = 'Export Table as Excel'/>
       </div>

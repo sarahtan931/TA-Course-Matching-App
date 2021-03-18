@@ -21,9 +21,14 @@ export default class MatchPage extends Component {
 			"Access-Control-Allow-Origin": "http://localhost:3001"
 		  },
 		})
+
+		this.setState({ message: "Cleared Matches", data: [] })
 	  }
 
 	getMatches = () => {
+
+		document.getElementById("load").style.display = "block";
+
 		fetch("http://localhost:3000/api/match")
 			.then(async response => {
 				const data = await response.json();
@@ -38,6 +43,7 @@ export default class MatchPage extends Component {
 				console.log(filteredData);
 				console.log("Setting State");
 				this.setState({ message: "Have Data", data: data })
+				document.getElementById("load").style.display = "none";
 			})
 			.catch(error => {
 				this.setState({ errorMessage: error.toString() });
@@ -64,9 +70,10 @@ export default class MatchPage extends Component {
 
             <div>		
 				<h1>{window.localStorage.getItem('email')}</h1>		
-				<button onClick={this.getMatches}>
+				<button onClick={this.getMatches} class="twoToneButton">
 					Match
 				</button>
+				<div class="loader" id="load"></div>
 				<button id = "save" onClick = {this.clearMatch}>Clear Match</button>
 				<div>
 					{this.state.message}
