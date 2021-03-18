@@ -13,6 +13,16 @@ export default class MatchPage extends Component {
 		};	
 	}	
 
+	clearMatch = () => {
+		fetch('http://localhost:3000/api/clearmatching', {
+		  method: "POST",
+		  headers: {
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "http://localhost:3001"
+		  },
+		})
+	  }
+
 	getMatches = () => {
 		fetch("http://localhost:3000/api/match")
 			.then(async response => {
@@ -57,6 +67,7 @@ export default class MatchPage extends Component {
 				<button onClick={this.getMatches}>
 					Match
 				</button>
+				<button id = "save" onClick = {this.clearMatch}>Clear Match</button>
 				<div>
 					{this.state.message}
 				</div>					

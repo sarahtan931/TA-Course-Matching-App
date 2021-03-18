@@ -591,7 +591,7 @@ Course.findOne(({"code":courseCode}),function(err,crs){
     crs.ta_hours_old = old_hours;
     crs.enroll_old = old_enroll;
     crs.enroll_new = new_enroll;
-    crs.save()
+    crs.save();
 /*Course.updateOne({"code":courseCode},{$push: { ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll}}, function(err1, result1) {
   if(err1){
     console.log(err1)
@@ -624,10 +624,17 @@ Course.findOne(({"code":courseCode}),function(err,crs){
 router.post('/clearmatching', (req, res, next) => {
 
 //assigned array in courses schema
-Course.updateMany({},{$push:{assigned:[]}});
+Course.updateMany({},{assigned: []},function(err,crs){
+  if (err){
+    console.log('error')
+  }
+});
 //set hours to 0 in ta_applicants schema
-TA.updateMany({},{$push:{hours:0}});
-;
+TA.updateMany({},{hours: 0}, function(err,ta){
+  if (err){
+    console.log('error')
+  }
+});
 
 output3 = {
   text: "Assigned database entries cleared"
