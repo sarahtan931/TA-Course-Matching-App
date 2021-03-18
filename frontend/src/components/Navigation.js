@@ -4,9 +4,10 @@ import ContactPage from './Pages/ContactPage';
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
 import MatchPage from './Pages/MatchPage';
-import RankingPage from './Pages/RankingPage';
+import UploadPage from './Pages/UploadPage';
 import InstructorDashboard from './Pages/InstructorDashboard';
 import EceAdminDashboard from './Pages/EceAdminDashboard';
+import RankPage from './Pages/RankPage';
  
 const Navigation = () => {
     return (
@@ -26,8 +27,9 @@ const Navigation = () => {
            <Route path="/register" component={RegisterPage} exact/>
            <Route path="/match" component={MatchPage} exact/>
            <Route path="/instructor-dashboard" component={InstructorDashboard} exact/>
-           <Route path="/ranking" component={RankingPage} exact/>
            <Route path='/eceadmin-dashboard' component={EceAdminDashboard}/>
+           <Route path="/upload" component={UploadPage} exact/>
+           <Route path="/rank" component={RankPage} exact/>
       </Switch>
       </BrowserRouter>
       </div> 
