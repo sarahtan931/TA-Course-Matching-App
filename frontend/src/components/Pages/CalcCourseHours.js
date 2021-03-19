@@ -92,33 +92,17 @@ class CalcCourseHours extends Component {
 
   save = () => {
 
-   // for (var course in this.newinfo) {
-    this.newinfo.forEach(app => {
-        let body = {
-            code: app["code"],
-            ta_hours_old: app['ta_hours_old'],
-            ta_hours_new: app['ta_hours_new'],
-            enroll_old: app['enroll_old'],
-            enroll_new: app['enroll_new']
-        }
         console.log('information')
-        console.log(body)
         fetch("http://localhost:3000/api/saveHours", {
             // Creates a post call with the state info
-        method: "POST",
-        body: JSON.stringify({
-          code: app["code"],
-          ta_hours_old: app['ta_hours_old'],
-          ta_hours_new: app['ta_hours_new'],
-          enroll_old: app['enroll_old'],
-          enroll_new: app['enroll_new']
-        }),
+        method: "PUT",
+        body: JSON.stringify({"Courses": this.newinfo}),
             headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "http://localhost:3001"
           },
         })
-      });
+     // });
 
       
       this.setState({ message: "Hours Saved"})

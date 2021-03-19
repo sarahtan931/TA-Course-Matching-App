@@ -19,6 +19,7 @@ const Instructor = require("./models/instructors.js");
 const User = require("./models/user.js");
 const TA = require("./models/ta_applicants.js");
 const Application = require("./models/apps.js");
+const { forEach } = require("underscore");
 require("./passportconfig");
 
 const router = express.Router();
@@ -96,10 +97,10 @@ router.post('/register', [
 // save instructor applicants from ranked excel sheet
 router.post('/save', (req, res, next) => {
   const app = req.body;
-  Course.findOne(({"code": app.code.toLowerCase()}), function(err, course) {
+  Course.findOne(({ "code": app.code.toLowerCase() }), function (err, course) {
     if (course) {
       course.instructors.forEach(prof => {
-        Instructor.updateOne({email: prof}, { $push: { preference: app }}, function(err, result) {
+        Instructor.updateOne({ email: prof }, { $push: { preference: app } }, function (err, result) {
           if (err) {
             console.log(err)
             res.status(400).send("ERROR: Could not update instructor preference.")
@@ -205,14 +206,14 @@ router.post('/ins-prefer', (req, res, next) => {
 router.get('/:instructor', (req, res, next) => {
   console.log(req.params.instructor);
   const email = req.params.instructor;
-  Instructor.find({email: email}, function (err, data) {
-      if (data) {
-        console.log(data);
-        res.send(data);
-      } else {
-        res.status(404).send("Instructor not found.");
-      }
-    })
+  Instructor.find({ email: email }, function (err, data) {
+    if (data) {
+      console.log(data);
+      res.send(data);
+    } else {
+      res.status(404).send("Instructor not found.");
+    }
+  })
 })
 
 router.get('/match', (req, res, next) => {
@@ -392,25 +393,25 @@ router.post('/accept', (req, res, next) => {
   let course = req.body.course;
   let isAccepted = req.body.accept;
 
-  if(isAccepted){
-    TA.updateOne({ email: ta }, { accepted: isAccepted})
-    .then(data => {console.log(data)})
-    .catch(err => {
-      res.status(404).send("something went wrong")
-    })
-  } else if (!isAccepted){
-    TA.updateOne({email: ta}, {hours: 0})
-    .catch(err => {
-      res.status(404).send("something went wrong")
-    })
-    Course.updateOne({ code: course}, {$pull: {assigned: {name: ta}}})
-    .catch(err => {
-      res.status(404).send("something went wrong")
-    })
+  if (isAccepted) {
+    TA.updateOne({ email: ta }, { accepted: isAccepted })
+      .then(data => { console.log(data) })
+      .catch(err => {
+        res.status(404).send("something went wrong")
+      })
+  } else if (!isAccepted) {
+    TA.updateOne({ email: ta }, { hours: 0 })
+      .catch(err => {
+        res.status(404).send("something went wrong")
+      })
+    Course.updateOne({ code: course }, { $pull: { assigned: { name: ta } } })
+      .catch(err => {
+        res.status(404).send("something went wrong")
+      })
   }
 
   res.status(200).send("success")
-  
+
 });
 
 //manually remove a TA
@@ -418,11 +419,11 @@ router.post('/remove_ta', (req, res, next) => {
   ta = req.body.ta;
   course = req.body.course;
 
-  TA.updateOne({email: ta}, {hours: 0})
+  TA.updateOne({ email: ta }, { hours: 0 })
     .catch(err => {
       res.status(404).send("something went wrong")
     })
-    Course.updateOne({ code: course}, {$pull: {assigned: {name: ta}}})
+  Course.updateOne({ code: course }, { $pull: { assigned: { name: ta } } })
     .catch(err => {
       res.status(404).send("something went wrong")
     })
@@ -441,44 +442,44 @@ router.post('/add_ta', (req, res, next) => {
     hours: hours
   }
 
-  TA.findOne({email: ta})
-  .then(data => {
-    if(!data){
-      entry = new TA({ email: ta, hours: hours, accepted: true})
-      entry.save(function (err) {
-        if (err) {
-          console.log(err)
-          res.status(400).send("Something went wrong")
-        } 
-      });
-    } else {
-      TA.updateOne({email: ta}, {hours: hours})
-      .catch(err => {
-        res.status(404).send("something went wrong")
-      })
-    }
+  TA.findOne({ email: ta })
+    .then(data => {
+      if (!data) {
+        entry = new TA({ email: ta, hours: hours, accepted: true })
+        entry.save(function (err) {
+          if (err) {
+            console.log(err)
+            res.status(400).send("Something went wrong")
+          }
+        });
+      } else {
+        TA.updateOne({ email: ta }, { hours: hours })
+          .catch(err => {
+            res.status(404).send("something went wrong")
+          })
+      }
 
-    Course.updateOne({ code: course}, {$push: {assigned: new_data}})
-    .then(stuff => {
-      res.status(200).send("successfully added")
-    })
-    .catch(err => {
-      res.status(404).send("something went wrong")
-    })
+      Course.updateOne({ code: course }, { $push: { assigned: new_data } })
+        .then(stuff => {
+          res.status(200).send("successfully added")
+        })
+        .catch(err => {
+          res.status(404).send("something went wrong")
+        })
 
-  })
+    })
 });
 router.post('/saveinstructor', (req, res, next) => {
   const instructor = req.body.instructor;
 
-  Instructor.updateOne({email: instructor.email}, function (err, result) {
+  Instructor.updateOne({ email: instructor.email }, function (err, result) {
     if (err) {
       console.log(err)
       res.status(400).send("Something went wrong")
     } else {
       output = {
         text: "Successfully updated instructor preferences"
-      } 
+      }
     }
   })
 });
@@ -606,70 +607,58 @@ router.post('/fillapps', (req, res, next) => {
 });
 
 //save new ta hours (based on the calculation)
-router.post('/saveHours',(req,res,next)=>{
-  new_hours = req.body.ta_hours_new;
-  old_hours = req.body.ta_hours_old;
-  new_enroll= req.body.enroll_new;
-  old_enroll=req.body.enroll_old;
-  courseCode=req.body.code;
-  console.log(new_hours)
+router.put('/saveHours', (req, res, next) => {
+  req.body.Courses.forEach(course => {
+    new_hours = course.ta_hours_new;
+    old_hours = course.ta_hours_old;
+    new_enroll = course.enroll_new;
+    old_enroll = course.enroll_old;
+    courseCode = course.code;
 
-Course.findOne(({"code":courseCode}),function(err,crs){
-  if(crs){
-    /*crs.ta_hours_new = new_hours;
-    crs.ta_hours_old = old_hours;
-    crs.enroll_old = old_enroll;
-    crs.enroll_new = new_enroll;
-    crs.save();*/
-Course.updateOne({"code":courseCode},{ ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll}, function(err1, result1) {
-  if(err1){
-    console.log(err1)
-  }
+    Course.findOne({ code: courseCode })
+    .then(data => {
+      if (!data) {
+        entry = new Course({code: courseCode, ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll})
+        entry.save(function (err) {
+          if (err) {
+          //console.log(err)
+            res.status(400).send("Something went wrong")
+          }
+        });
+      } else {
+       data.ta_hours_new = course.ta_hours_new;
+       data.ta_hours_old = course.ta_hours_old;
+       data.enroll_new = course.enroll_new;
+       data.enroll_old = course.enroll_old;
+       data.save();
+     
+      }
+    })
   });
-    output1 = {
-      text: "Updated course"
-    } 
-    res.status(200).send(output1);
-  }
-  else if (err){
-    console.log(err);
-    res.status(400).send(err);
-  }
-  else{
-    entry1 = new Course({ code: courseCode, ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll})
-    entry1.save();
-
-    output2 = {
-      text: "Course added to database"
-    }
-    res.status(200).send(output2);
-  }
-
-});
-
+  res.status(200).send('Updated');
 });
 
 //clear matching
 router.post('/clearmatching', (req, res, next) => {
 
-//assigned array in courses schema
-Course.updateMany({},{assigned: []},function(err,crs){
-  if (err){
-    console.log('error')
-  }
-});
-//set hours to 0 in ta_applicants schema
-TA.updateMany({},{hours: 0}, function(err,ta){
-  if (err){
-    console.log('error')
-  }
-});
+  //assigned array in courses schema
+  Course.updateMany({}, { assigned: [] }, function (err, crs) {
+    if (err) {
+      console.log('error')
+    }
+  });
+  //set hours to 0 in ta_applicants schema
+  TA.updateMany({}, { hours: 0 }, function (err, ta) {
+    if (err) {
+      console.log('error')
+    }
+  });
 
-output3 = {
-  text: "Assigned database entries cleared"
-}
+  output3 = {
+    text: "Assigned database entries cleared"
+  }
 
-res.status(200).send(output3);
+  res.status(200).send(output3);
 
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LogoutButton from "../LogoutButton";
 import MatchPage from './MatchPage';
-import RankingPage from './RankingPage';
+import RankingPage from './RankPage';
 import CalcCourseHours from './CalcCourseHours';
 
 export default class EceAdminDashboard extends Component {
