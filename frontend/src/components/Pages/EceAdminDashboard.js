@@ -3,12 +3,14 @@ import LogoutButton from "../LogoutButton";
 import MatchPage from './MatchPage';
 import RankingPage from './RankPage';
 import CalcCourseHours from './CalcCourseHours';
+import RegisterUser from './RegisterUser';
 
 export default class EceAdminDashboard extends Component {
 
 	state = {
 		isMatchVisible: false,
-		isHoursVisible: false
+		isHoursVisible: false,
+		isRegisterVisible: false
 	
 	  }
 	render() {
@@ -32,9 +34,9 @@ export default class EceAdminDashboard extends Component {
 						<h1 class="dashboard-header-title"> ECE Admin Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false }) }>Match</a>
-						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false }) }>Calculate Course Hours</a>
-						<a href="#register">Register User</a>
+						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false }) }>Match</a>
+						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false,  isRegisterVisible: false }) }>Calculate Course Hours</a>
+						<a  onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true }) } >Register New User</a>
 						
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>
@@ -44,6 +46,7 @@ export default class EceAdminDashboard extends Component {
 					<div class="dashboardcomp">
 							{ this.state.isMatchVisible ? <MatchPage /> : null }
 							{ this.state.isHoursVisible ? <CalcCourseHours/>: null}
+							{ this.state.isRegisterVisible ? <RegisterUser/>: null}
 						</div>
 					
 				</div>

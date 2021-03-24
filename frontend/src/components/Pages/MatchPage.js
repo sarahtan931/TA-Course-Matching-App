@@ -27,10 +27,16 @@ export default class MatchPage extends Component {
 	  }
 
 	getMatches = () => {
-
+		
 		document.getElementById("load").style.display = "block";
 
-		fetch("http://localhost:3000/api/match")
+		fetch("http://localhost:3000/api/match", {
+			method: "PUT",
+			headers: {
+			  "Content-Type": "application/json",
+			  "Access-Control-Allow-Origin": "http://localhost:3001"
+			}
+		})
 			.then(async response => {
 				const data = await response.json();
 
@@ -57,7 +63,7 @@ export default class MatchPage extends Component {
 	render () {
 		if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "instructor"
+			localStorage.getItem("category") != "admin"
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (
@@ -68,26 +74,11 @@ export default class MatchPage extends Component {
 		} else {
 		return (
 			<>
-
             <div>		
 				<h1>{window.localStorage.getItem('email')}</h1>		
-				<Button type="submit"
-				color="primary"
-				value="Submit"
-				variant="contained"
-				size="large"
-				fullWidth 
-				onClick={this.getMatches}>
-					Match
-				</Button>
+				<button onClick ={this.getMatches}>Match</button>
 				<div class="loader" id="load"></div>
-				<button 
-				color="primary"
-				value="Submit"
-				variant="contained"
-				size="large"
-				fullWidth 
-				id = "save" onClick = {this.clearMatch}>Clear Match</button>
+				<button onClick = {this.clearMatch}>Clear Match</button>
 				<div>
 					{this.state.message}
 				</div>					

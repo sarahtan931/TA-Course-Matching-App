@@ -2,16 +2,19 @@ import React, { Component } from "react";
 import LoginButton from "../LoginButton";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
-export default class RegisterPage extends Component {
+export default class RegisterUser extends Component {
 	constructor(props) {
 		super(props);
 		// Create the state model that will be send to DB
 		this.state = {
+			name: "",
 			email: "",
 			authenticationkey: "",
 			password: "",
-			passwordConfirm: "",
+			category: ""
+
 		};
 	}
 
@@ -25,8 +28,9 @@ export default class RegisterPage extends Component {
 
 	// When the button is clicked this function is called on the form
 	onSubmit = (event) => {
+		console.log(this.state)
 		event.preventDefault();
-		fetch("http://localhost:3000/api/setpassword", {
+		fetch("http://localhost:3000/api/register", {
 			method: "POST",
 			body: JSON.stringify(this.state),
 			headers: {
@@ -36,7 +40,8 @@ export default class RegisterPage extends Component {
 			.then((res) => {
 				if (res.status === 200) {
 					// If the auth is correct, redirect to login page
-					this.props.history.push("/");
+					//this.props.history.push("/");
+					console.log('added')
 				} else {
 					// Throw errors
 					const error = new Error(res.error);
@@ -54,8 +59,7 @@ export default class RegisterPage extends Component {
 		// Rendering the register page component
 		return (
 			<div>
-				<div class="login-left">
-					<h1 class="main-title">TA Matching Application</h1>
+				<div>
 					<div class="login-bottom-text">
 						<Link
 							to="/contact"
@@ -67,11 +71,24 @@ export default class RegisterPage extends Component {
 						</Link>
 					</div>
 				</div>
-				<div class="login-right">
-					<h1 class="login-title">Register</h1>
+				<div >
+					<h1>Add a new user account</h1>
 					<form onSubmit={this.onSubmit}>
 						<div class="container">
-							<div class="login-fields">
+							<div>
+								<TextField
+									fullWidth
+									class="login-textfield"
+									type="name"
+									name="name"
+									placeholder="Enter New User's Name"
+									variant="outlined"
+									value={this.state.name}
+									onChange={this.handleInputChange}
+									required
+								/>
+							</div>
+							<div>
 								<TextField
 									fullWidth
 									class="login-textfield"
@@ -84,47 +101,46 @@ export default class RegisterPage extends Component {
 									required
 								/>
 							</div>
-							<div class="login-fields">
+							<div>
 								<TextField
 									fullWidth
 									class="login-textfield"
-									type="text"
-									name ="authenticationkey"
-									placeholder="Authentication Key"
+									type="category"
+									name="category"
+									placeholder="Enter Category"
+									variant="outlined"
+									value={this.state.category}
+									onChange={this.handleInputChange}
+									required
+								/>
+							</div>
+							<div>
+								<TextField
+									fullWidth
+									class="login-textfield"
+									type="authenticationkey"
+									name="authenticationkey"
+									placeholder="Enter Authentication Key"
 									variant="outlined"
 									value={this.state.authenticationkey}
 									onChange={this.handleInputChange}
 									required
 								/>
 							</div>
-							<div class="login-fields">
-								<TextField
+							<div>
+								<Button
+									type="submit"
+									color="primary"
+									value="Submit"
+									variant="contained"
+									size="large"
 									fullWidth
-									class="login-textfield"
-									type="password"
-									name="password"
-									placeholder="New password"
-									variant="outlined"
-									value={this.state.password}
-									onChange={this.handleInputChange}
-									required
-								/>
-							</div>
-							<div class="login-fields">
-								<TextField
-									fullWidth
-									class="login-textfield"
-									type="password"
-									name="passwordConfirm"
-									placeholder="Re-enter password"
-									variant="outlined"
-									value={this.state.passwordConfirm}
-									onChange={this.handleInputChange}
-									required
-								/>
-							</div>
-							<div class="login-fields">
-								<LoginButton></LoginButton>
+									style={{
+										backgroundColor: "#FFA62B",
+									}}
+									>
+									Register User
+								</Button>
 							</div>
 						</div>
 					</form>

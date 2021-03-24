@@ -102,9 +102,6 @@ class CalcCourseHours extends Component {
             "Access-Control-Allow-Origin": "http://localhost:3001"
           },
         })
-     // });
-
-      
       this.setState({ message: "Hours Saved"})
     }; 
  // } 

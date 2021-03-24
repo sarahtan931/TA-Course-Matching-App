@@ -66,15 +66,10 @@ router.post('/login', (req, res, next) => {
 });
 
 //add a new user to the system and give them an authentication key
-router.post('/register', [
-  check("email").isEmail(),
-  check('name').trim().matches(/^([0-9A-Za-z\u00AA-\uFFDC]*)$/).isLength({ min: 1, max: 20 }).escape()
-], (req, res, next) => {
+router.post('/register', (req, res, next) => {
+ // console.log(req.body)
   const user = req.body;
-  var err = validationResult(req);
-  if (!err.isEmpty()) {
-    res.status('404').send('please enter a valid email')
-  } else {
+
     User.findOne(({ "email": user.email }), function (err, exists) {
       if (err || exists) {
         return res.status(404).send(`Already Exists`);
@@ -86,12 +81,12 @@ router.post('/register', [
         "name": user.name,
         "email": user.email,
         "authenticationkey": user.authenticationkey,
-        "password": null
+        "category": user.category
       });
       finalUser.save();
-      res.send(finalUser)
+      res.status(200).send(finalUser);   
     })
-  }
+
 });
 
 // save instructor applicants from ranked excel sheet
@@ -131,24 +126,6 @@ router.post('/setpassword', (req, res, next) => {
   })
 });
 
-//with authentication key, new user set password
-router.post("/setpassword", (req, res, next) => {
-  email = req.body.email;
-  password = req.body.password;
-  authkey = req.body.authenticationkey;
-  User.findOne(
-    { email: email, authenticationkey: authkey },
-    function (err, user) {
-      if (!password) {
-        return res.status(422).send("Error");
-      }
-      console.log(password);
-      user.setPassword(password);
-      user.save();
-      res.send(user);
-    }
-  );
-});
 
 //add an instructor
 router.post('/addinstructor', (req, res, next) => {
@@ -216,14 +193,12 @@ router.get('/:instructor', (req, res, next) => {
   })
 })
 
-router.get('/match', (req, res, next) => {
+router.put('/match', (req, res, next) => {
   //make course array
   Course.find({}, function (err, all_courses) {
     //for loop iterating through course array
     //course = i of for loop
-
     testAwait(all_courses);
-
     setTimeout(() => sendMatchResults(), 5000)
 
   });
@@ -237,7 +212,6 @@ router.get('/match', (req, res, next) => {
       console.log('Done')
       return 0;
     }
-
     start();
   }
 
@@ -606,37 +580,7 @@ router.post('/fillapps', (req, res, next) => {
   })
 });
 
-//save new ta hours (based on the calculation)
-router.put('/saveHours', (req, res, next) => {
-  req.body.Courses.forEach(course => {
-    new_hours = course.ta_hours_new;
-    old_hours = course.ta_hours_old;
-    new_enroll = course.enroll_new;
-    old_enroll = course.enroll_old;
-    courseCode = course.code;
 
-    Course.findOne({ code: courseCode })
-    .then(data => {
-      if (!data) {
-        entry = new Course({code: courseCode, ta_hours_new: new_hours, ta_hours_old: old_hours, enroll_old: old_enroll, enroll_new: new_enroll})
-        entry.save(function (err) {
-          if (err) {
-          //console.log(err)
-            res.status(400).send("Something went wrong")
-          }
-        });
-      } else {
-       data.ta_hours_new = course.ta_hours_new;
-       data.ta_hours_old = course.ta_hours_old;
-       data.enroll_new = course.enroll_new;
-       data.enroll_old = course.enroll_old;
-       data.save();
-     
-      }
-    })
-  });
-  res.status(200).send('Updated');
-});
 
 //clear matching
 router.post('/clearmatching', (req, res, next) => {
