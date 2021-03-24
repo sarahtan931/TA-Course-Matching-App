@@ -19,7 +19,6 @@ const Instructor = require("./models/instructors.js");
 const User = require("./models/user.js");
 const TA = require("./models/ta_applicants.js");
 const Application = require("./models/apps.js");
-const { forEach } = require("underscore");
 require("./passportconfig");
 
 const router = express.Router();
@@ -39,6 +38,11 @@ db.once("open", function () {
 router.post("/auth", (req, res) => {
   console.log("Backend " + JSON.stringify(req.body));
   return res.status(200);
+});
+
+app.use((req, res, next) => {
+  console.log(`${req.method} request for ${req.url}`);
+  next()
 });
 
 router.post('/login', (req, res, next) => {
@@ -191,7 +195,7 @@ router.get('/:instructor', (req, res, next) => {
       res.status(404).send("Instructor not found.");
     }
   })
-})
+});
 
 router.put('/match', (req, res, next) => {
   //make course array
@@ -239,7 +243,7 @@ router.put('/match', (req, res, next) => {
   }
   function sendMatchResults() {
     Course.find({}, function (err, courses) {
-      res.send(courses)
+     res.send(courses)
     })
   }
 
