@@ -18,6 +18,10 @@ export default class RegisterUser extends Component {
 		};
 	}
 
+	setCategory(event) {
+		this.setState({"category" : event.target.value});
+	  }
+
 	// When inputs change update the state variables
 	handleInputChange = (event) => {
 		const { value, name } = event.target;
@@ -41,7 +45,7 @@ export default class RegisterUser extends Component {
 				if (res.status === 200) {
 					// If the auth is correct, redirect to login page
 					//this.props.history.push("/");
-					console.log('added')
+					alert('New User Added')
 				} else {
 					// Throw errors
 					const error = new Error(res.error);
@@ -74,7 +78,7 @@ export default class RegisterUser extends Component {
 				<div >
 					<h1>Add a new user account</h1>
 					<form onSubmit={this.onSubmit}>
-						<div class="container">
+						<div class="register-background">
 							<div>
 								<TextField
 									fullWidth
@@ -101,19 +105,11 @@ export default class RegisterUser extends Component {
 									required
 								/>
 							</div>
-							<div>
-								<TextField
-									fullWidth
-									class="login-textfield"
-									type="category"
-									name="category"
-									placeholder="Enter Category"
-									variant="outlined"
-									value={this.state.category}
-									onChange={this.handleInputChange}
-									required
-								/>
-							</div>
+							<div onChange={this.setCategory.bind(this)}>
+        						<input type="radio" value="admin" name="category"/> ECE Admin
+        						<input type="radio" value="instructor" name="category"/> Instructor
+								<input type="radio" value="chair" name="category"/> Undergraduate Chair
+      						</div>
 							<div>
 								<TextField
 									fullWidth
