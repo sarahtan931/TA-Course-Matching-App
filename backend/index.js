@@ -71,25 +71,25 @@ router.post('/login', (req, res, next) => {
 
 //add a new user to the system and give them an authentication key
 router.post('/register', (req, res, next) => {
- // console.log(req.body)
+  // console.log(req.body)
   const user = req.body;
 
-    User.findOne(({ "email": user.email }), function (err, exists) {
-      if (err || exists) {
-        return res.status(404).send(`Already Exists`);
-      }
-      if (!user.email) {
-        return res.status(422).send('Error')
-      }
-      const finalUser = new User({
-        "name": user.name,
-        "email": user.email,
-        "authenticationkey": user.authenticationkey,
-        "category": user.category
-      });
-      finalUser.save();
-      res.status(200).send(finalUser);   
-    })
+  User.findOne(({ "email": user.email }), function (err, exists) {
+    if (err || exists) {
+      return res.status(404).send(`Already Exists`);
+    }
+    if (!user.email) {
+      return res.status(422).send('Error')
+    }
+    const finalUser = new User({
+      "name": user.name,
+      "email": user.email,
+      "authenticationkey": user.authenticationkey,
+      "category": user.category
+    });
+    finalUser.save();
+    res.status(200).send(finalUser);
+  })
 
 });
 
@@ -243,7 +243,7 @@ router.put('/match', (req, res, next) => {
   }
   function sendMatchResults() {
     Course.find({}, function (err, courses) {
-     res.send(courses)
+      res.send(courses)
     })
   }
 
@@ -437,16 +437,36 @@ router.post('/add_ta', (req, res, next) => {
           })
       }
 
-      Course.updateOne({ code: course }, { $push: { assigned: new_data } })
-        .then(stuff => {
-          res.status(200).send("successfully added")
-        })
-        .catch(err => {
-          res.status(404).send("something went wrong")
-        })
+      Course.findOne({ code: course, "assigned.name": ta })
+        .then(info => {
+          if (!info) {
+            Course.updateOne({ code: course }, { $push: { assigned: new_data } })
+              .then(stuff => {
+                res.status(200).send("successfully updated hours")
+              })
+              .catch(err => {
+                res.status(404).send("something went wrong")
+              })
+          } else {
+            Course.updateOne({ code: course }, { $pull: { assigned: { name: ta } } })
+              .then(data => {
+                Course.updateOne({ code: course }, { $push: { assigned: new_data } })
+                  .then(stuff => {
+                    res.status(200).send("successfully updated hours")
+                  })
+                  .catch(err => {
+                    res.status(404).send("something went wrong")
+                  })
+              })
+              .catch(err => {
+                res.status(404).send("something went wrong")
+              })
+          }
 
+        })
     })
 });
+
 router.post('/saveinstructor', (req, res, next) => {
   const instructor = req.body.instructor;
 
