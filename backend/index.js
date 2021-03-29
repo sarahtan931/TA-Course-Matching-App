@@ -522,6 +522,34 @@ router.post('/courseinfo', (req, res, next) => {
     })
 });
 
+//get course information
+router.put('/getcourses', (req, res, next) => {
+  Course.find({}, function (err, courses) {
+    res.status(200).send(courses);
+  });
+})
+
+//save TA applicant information
+router.post('/saveTAs', (req, res, next) => {
+  ta_array = req.body.tas;
+
+  ta_array.forEach(data => {
+    entry = new TA({experience: data.experience, priority: data.priority, email: data.email, name: data.name, preference: data.preference})
+    entry.save(function(err){
+      if(err){
+        res.status(400).send("Something went wrong");
+      } 
+    })
+  })
+
+});
+
+//get tas
+router.put('/gettas', (req, res, next) => {
+  TA.find({}, function (err, tas) {
+    res.status(200).send(tas);
+  });
+});
 
 router.post('/saveinstructor', (req, res, next) => {
   const instructor = req.body.instructor;
