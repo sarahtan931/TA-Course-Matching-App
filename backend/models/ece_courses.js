@@ -45,6 +45,10 @@ const CourseSchema = new mongoose.Schema(
             type: [String],
             default: 0
         },
+        qualifications: {
+            type: [String],
+            default: 0
+        },
         assigned: {
             type: [Assign],
             default: null
