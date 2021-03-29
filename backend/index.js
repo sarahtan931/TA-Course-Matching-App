@@ -199,19 +199,21 @@ router.get('/:instructor', (req, res, next) => {
 
 router.put('/match', (req, res, next) => {
   //make course array
+  isInstructor = req.body.instructor;
+
   Course.find({}, function (err, all_courses) {
     //for loop iterating through course array
     //course = i of for loop
-    testAwait(all_courses);
+    testAwait(all_courses, isInstructor);
     setTimeout(() => sendMatchResults(), 5000)
 
   });
 
-  async function testAwait(courses) {
+  async function testAwait(courses, isIns) {
     const start = async () => {
       await asyncForEach(courses, async (data) => {
         await waitFor(500)
-        actualMatch(data);
+        actualMatch(data, isIns);
       })
       console.log('Done')
       return 0;
@@ -226,12 +228,16 @@ router.put('/match', (req, res, next) => {
     }
   }
 
-  async function actualMatch(data) {
+  async function actualMatch(data, ins) {
     TA.find({ "preference.code": data.code, "hours": 0 })
       .then(tas => {
         hiring_array = hiring(data, tas);
-        app_pref = applicantPreferences(data, hiring_array);
-        final_array = instructorPreferences(data, app_pref);
+        let final_array = []
+        if(!ins){
+          final_array = applicantPreferences(data, hiring_array);
+        } else {
+          final_array = instructorPreferences(data, hiring_array);
+        }
         assignTAs(data, final_array).then(
           function (value) { console.log(value) }
         );
