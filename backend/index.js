@@ -378,7 +378,7 @@ router.post('/accept', (req, res, next) => {
   let isAccepted = req.body.accept;
 
   if (isAccepted) {
-    TA.updateOne({ email: ta }, { accepted: isAccepted })
+    Course.updateOne({ code: course, "assigned.name": ta}, { '$set': {"assigned.$.accepted": true }})
       .then(data => { console.log(data) })
       .catch(err => {
         res.status(404).send("something went wrong")
@@ -506,13 +506,13 @@ router.post('/courseinfo', (req, res, next) => {
   Course.findOne({ code: course })
     .then(data => {
       if (data) {
-        Course.updateOne({code: course}, {qualifications: qual, questions: ques})
-        .then( data => {
-          res.status(200).send('Successfully updated course');
-        })
-        .catch( data => {
-          res.status(400).send('Something went wrong');
-        })
+        Course.updateOne({ code: course }, { qualifications: qual, questions: ques })
+          .then(data => {
+            res.status(200).send('Successfully updated course');
+          })
+          .catch(data => {
+            res.status(400).send('Something went wrong');
+          })
       } else {
         res.status(404).send("Course not found");
       }
@@ -534,11 +534,11 @@ router.post('/saveTAs', (req, res, next) => {
   ta_array = req.body.tas;
 
   ta_array.forEach(data => {
-    entry = new TA({experience: data.experience, priority: data.priority, email: data.email, name: data.name, preference: data.preference})
-    entry.save(function(err){
-      if(err){
+    entry = new TA({ experience: data.experience, priority: data.priority, email: data.email, name: data.name, preference: data.preference })
+    entry.save(function (err) {
+      if (err) {
         res.status(400).send("Something went wrong");
-      } 
+      }
     })
   })
 
