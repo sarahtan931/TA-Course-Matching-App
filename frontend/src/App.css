@@ -196,3 +196,8 @@ tr{
   align-items: center;
   background-color: white;
 }
+
+.manage-TA-title{
+  padding-left: calc( (100% - 151px) / 2 );
+  color: #FFA62B;
+}

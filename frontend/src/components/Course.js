@@ -7,6 +7,7 @@ const Course = ({ tas, code, state }) => {
             {tas.map(ta => (		
                 <Ta ta={ta}/>				
             ))}
+            <a>{state}</a>
         </>	
     )
   }
