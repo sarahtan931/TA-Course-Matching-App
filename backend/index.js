@@ -233,7 +233,7 @@ router.put('/match', (req, res, next) => {
       .then(tas => {
         hiring_array = hiring(data, tas);
         let final_array = []
-        if(!ins){
+        if (!ins) {
           final_array = applicantPreferences(data, hiring_array);
         } else {
           final_array = instructorPreferences(data, hiring_array);
@@ -471,6 +471,84 @@ router.post('/add_ta', (req, res, next) => {
 
         })
     })
+});
+
+//save new courses to database
+router.post('/savecourse', (req, res, next) => {
+  let course = req.body.course;
+
+  Course.findOne({ code: course })
+    .then(data => {
+      if (!data) {
+        entry = new Course({ code: course });
+        entry.save(function (err) {
+          if (err) {
+            res.status(400).send("Something went wrong");
+          } else {
+            res.status(200).send("successfully added course");
+          }
+        })
+      } else {
+        res.status(404).send("This course already exists");
+      }
+    })
+    .catch(err => {
+      res.status(500).send("Something went wrong");
+    })
+});
+
+//save course info and questions
+router.post('/courseinfo', (req, res, next) => {
+  let course = req.body.course;
+  let ques = req.body.questions;
+  let qual = req.body.qualifications;
+
+  Course.findOne({ code: course })
+    .then(data => {
+      if (data) {
+        Course.updateOne({code: course}, {qualifications: qual, questions: ques})
+        .then( data => {
+          res.status(200).send('Successfully updated course');
+        })
+        .catch( data => {
+          res.status(400).send('Something went wrong');
+        })
+      } else {
+        res.status(404).send("Course not found");
+      }
+    })
+    .catch(err => {
+      res.status(500).send("Something went wrong");
+    })
+});
+
+//get course information
+router.put('/getcourses', (req, res, next) => {
+  Course.find({}, function (err, courses) {
+    res.status(200).send(courses);
+  });
+})
+
+//save TA applicant information
+router.post('/saveTAs', (req, res, next) => {
+  ta_array = req.body.tas;
+
+  ta_array.forEach(data => {
+    entry = new TA({experience: data.experience, priority: data.priority, email: data.email, name: data.name, preference: data.preference})
+    entry.save(function(err){
+      if(err){
+        res.status(400).send("Something went wrong");
+      } 
+    })
+  })
+
+});
+
+//get tas
+router.put('/gettas', (req, res, next) => {
+  TA.find({}, function (err, tas) {
+    res.status(200).send(tas);
+  });
 });
 
 router.post('/saveinstructor', (req, res, next) => {
