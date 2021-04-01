@@ -14,7 +14,7 @@ export default class ManageTA extends Component {
 	showMatches = () => {
 		document.getElementById("load").style.display = "block";
 
-		fetch("http://localhost:3000/api/gettas", {
+		fetch("http://localhost:3000/api/getcourses", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -40,7 +40,7 @@ export default class ManageTA extends Component {
 	render() {
 		if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "admin"
+			localStorage.getItem("category") != "instructor"
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (
@@ -53,22 +53,27 @@ export default class ManageTA extends Component {
 				<>
 					<div>
 						<h1 class="manage-TA-title">Manage TA's</h1>
-						<button onClick={this.showMatches}>Show TA's</button>
+						<button onClick={this.showMatches} class="manage-show-TA">Show TA's</button>
 						<div class="loader" id="load"></div>
-						<div>{this.state.message}</div>
 					</div>
 					{this.state.data.map((data) => (
-						<div>
-							<a>{data.email}</a>
+						<div class="accept-reject-card">
+							<a class="accept-reject-header">{data.code}</a>
+							{data.instructors.map((instruct) => (
+								<div>
+									<a class="accept-reject-sub-header">Professor: {instruct}</a>
+								</div>
+							))}
 							<br></br>
 							<a>
-								{data.preference.map((obj) => (
+								{data.assigned.map((obj) => (
 									<div>
-										<a>
-											{obj.code} : {obj.rank}
+										<a class="accept-reject-text">
+											Name: {obj.name}, Accepted: {obj.accepted.toString()}, Hours: {obj.hours} per week
 										</a>
 										<br></br>
-										<Button
+										<div class="accept-reject-buttons"> 
+											<Button
 											type="submit"
 											color="primary"
 											value="Submit"
@@ -91,7 +96,8 @@ export default class ManageTA extends Component {
 											}}
 										>
 											Reject
-										</Button>
+										</Button></div> 
+										
 										<br></br>
 									</div>
 								))}

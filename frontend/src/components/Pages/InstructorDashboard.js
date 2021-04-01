@@ -3,6 +3,7 @@ import LogoutButton from "../LogoutButton";
 import MatchPage from './MatchPage';
 import UploadPage from './UploadPage';
 import RankPage from './RankPage';
+import ManageTA from './ManageTA';
 
 
 export default class InstructorDashboard extends Component {
@@ -10,7 +11,8 @@ export default class InstructorDashboard extends Component {
 	state = {
 		isMatchVisible: false,
 		isUploadVisible: false,
-		isRankVisible: false
+		isRankVisible: false,
+		isManageVisible: false
 
 	  }
 	render() {
@@ -34,11 +36,10 @@ export default class InstructorDashboard extends Component {
 						<h1 class="dashboard-header-title"> Course Instructor Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true, isUploadVisible: false, isRankVisible: false }) }>Match</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: true, isRankVisible: false })} >Upload</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: true })} >Rank</a>
-						<a href="#hours">Change Hours</a>
-						<a href="#register">Register User</a>
+						<a onClick={() => this.setState({ isMatchVisible: true, isUploadVisible: false, isRankVisible: false, isManageVisible: false }) }>Match</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: true, isRankVisible: false, isManageVisible: false })} >Upload</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: true, isManageVisible: false })} >Rank</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: false, isManageVisible: true }) } >Manage TA's</a>
 						
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>
@@ -49,6 +50,7 @@ export default class InstructorDashboard extends Component {
 							{ this.state.isMatchVisible ? <MatchPage /> : null }
 							{ this.state.isUploadVisible ? <UploadPage />: null }
 							{ this.state.isRankVisible ? <RankPage />: null }
+							{ this.state.isManageVisible ? <ManageTA/>: null}
 						</div>
 					
 				</div>

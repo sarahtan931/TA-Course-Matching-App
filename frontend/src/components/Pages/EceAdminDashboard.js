@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import LogoutButton from "../LogoutButton";
 import MatchPage from './MatchPage';
-import ManageTA from './ManageTA';
 import CalcCourseHours from './CalcCourseHours';
 import RegisterUser from './RegisterUser';
 
@@ -10,8 +9,7 @@ export default class EceAdminDashboard extends Component {
 	state = {
 		isMatchVisible: false,
 		isHoursVisible: false,
-		isRegisterVisible: false,
-		isManageVisible: false
+		isRegisterVisible: false
 	  }
 	render() {
 
@@ -36,9 +34,7 @@ export default class EceAdminDashboard extends Component {
 					<div class="sidenav">
 						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isManageVisible: false }) }>Match</a>
 						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false,  isRegisterVisible: false, isManageVisible: false }) }>Calculate Course Hours</a>
-						<a  onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isManageVisible: false }) } >Register New User</a>
-						<a  onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isManageVisible: true }) } >Manage TA's</a>
-						
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isManageVisible: false }) } >Register New User</a>
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>
 						</div>
@@ -48,7 +44,6 @@ export default class EceAdminDashboard extends Component {
 							{ this.state.isMatchVisible ? <MatchPage /> : null }
 							{ this.state.isHoursVisible ? <CalcCourseHours/>: null}
 							{ this.state.isRegisterVisible ? <RegisterUser/>: null}
-							{ this.state.isManageVisible ? <ManageTA/>: null}
 						</div>
 					
 				</div>

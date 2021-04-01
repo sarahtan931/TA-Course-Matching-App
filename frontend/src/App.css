@@ -201,3 +201,51 @@ tr{
   padding-left: calc( (100% - 151px) / 2 );
   color: #FFA62B;
 }
+
+.accept-reject-header {
+  color: #3498db;
+  font-weight: 800;
+  font-size: 20px;
+  padding-left: 1vw;
+}
+
+.accept-reject-sub-header {
+  color: #3498db;
+  font-weight: 800;
+  font-size: 16px;
+  padding-left: 1.5vw;
+}
+
+.accept-reject-text {
+  color: black;
+  font-size: 15px;
+  padding-left: 1.5vw;
+}
+
+.accept-reject-buttons {
+  padding-left: 1vw;
+  padding-top: 1vh;
+}
+.accept-reject-card {
+  margin: 2vh;
+  border-radius: 10px;
+  margin-left: 3vw;
+  padding: 1vh;
+  padding-left: 3vw;
+  background-color: #A8DADC;
+  padding-left: 1vw;
+  width: calc( (100% - 151px) / 2 );
+}
+
+.manage-show-TA {
+  margin-left: calc( ((100% - 151px) / 2 ) + 1.5vw );
+  border-radius: 5px;
+  background-color: #3498db;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
