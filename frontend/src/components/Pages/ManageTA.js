@@ -64,7 +64,7 @@ export default class ManageTA extends Component {
 
 	  };
 
-	  reject = () => {
+	  /*reject = () => {
 		  console.log("hi");
 		let accept=false;
 		fetch('http://localhost:3000/api/accept', {
@@ -88,7 +88,7 @@ export default class ManageTA extends Component {
 			console.log("Error: ", error);
 		});
 
-	  };
+	  };*/
 
 	render() {
 		if (
@@ -136,7 +136,6 @@ export default class ManageTA extends Component {
 										</Button>
 										<Button
 											type="submit"
-											onClick={this.reject}
 											color="primary"
 											value="Submit"
 											variant="contained"
