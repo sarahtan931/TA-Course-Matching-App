@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField"
+import TextField from "@material-ui/core/TextField";
 
 export default class ManageTA extends Component {
 	constructor(props) {
@@ -56,26 +56,61 @@ export default class ManageTA extends Component {
 						<div class="loader" id="load"></div>
 					</div>
 					<br></br>
-					<div class="change-TA-form">
+					<div class="change-TA-form" onSubmit={this.onSubmit}>
 						<form noValidate autoComplete="off">
-							<TextField id="standard-basic" fullWidth label="TA Email" />
-                            <br></br>
-							<TextField id="standard-basic" fullWidth label="Course Code"/>
-                            <br></br>
-							<TextField id="standard-basic" fullWidth label="Hours (Week)"/>
-                            <br></br>
-                            <a class="spacingline"> </a>
-                            <br></br>
-							<Button
-								type="submit"
-								color="primary"
-								value="Submit"
-								variant="contained"
-								size="large"
-								style={{
-									backgroundColor: "#FFA62B",
-								}}
-							> Submit </Button>
+							<div class="container">
+								<div class="login-fields">
+									<TextField
+										fullWidth
+										class="login-textfield"
+										type="email"
+										name="email"
+										placeholder="TA Email"
+										variant="outlined"
+										value={this.state.email}
+										onChange={this.handleInputChange}
+										required
+									/>
+								</div>
+								<div class="login-fields">
+									<TextField
+										fullWidth
+										class="login-textfield"
+										type="text"
+										name="code"
+										placeholder="Course Code"
+										variant="outlined"
+										value={this.state.email}
+										onChange={this.handleInputChange}
+										required
+									/>
+								</div>
+								<div class="login-fields">
+									<TextField
+										fullWidth
+										class="login-textfield"
+										type="text"
+										name="hours"
+										placeholder="Hours (Week)"
+										variant="outlined"
+										value={this.state.email}
+										onChange={this.handleInputChange}
+										required
+									/>
+								</div>
+								<Button
+									type="submit"
+									color="primary"
+									value="Submit"
+									variant="contained"
+									size="large"
+									style={{
+										backgroundColor: "#FFA62B",
+									}}
+								>
+									Submit
+								</Button>
+							</div>
 						</form>
 					</div>
 				</>
