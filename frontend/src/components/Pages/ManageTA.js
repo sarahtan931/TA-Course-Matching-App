@@ -37,6 +37,57 @@ export default class ManageTA extends Component {
 			});
 	};
 
+	accept = (name,code) => {
+
+		fetch('http://localhost:3000/api/accept', {
+		  method: "POST",
+		  body:JSON.stringify({"accept":true,"course":code,"ta":name}),
+		  headers: {
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "http://localhost:3001"
+		  },
+		}).then(async(response)=>{
+		
+
+			if (!response.ok) {
+				console.log("Error! Fix your Code!");
+			}
+
+		this.showMatches();
+			//this.setState({ message: "Accepted Match"})
+
+		}).catch((error) => {
+			this.setState({ errorMessage: error.toString() });
+			console.log("Error: ", error);
+		});
+
+	  };
+
+	  reject = (name,code) => {
+		  
+		fetch('http://localhost:3000/api/accept', {
+		  method: "POST",
+		  body:JSON.stringify({"accept":false,"course":code,"ta":name}),
+		  headers: {
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "http://localhost:3001"
+		  },
+		}).then(async(response)=>{
+		
+			if (!response.ok) {
+				console.log("Error! Fix your Code!");
+			}
+		
+			this.showMatches();
+			//this.setState({ message: "Rejected Match"})
+
+		}).catch((error) => {
+			this.setState({ errorMessage: error.toString() });
+			console.log("Error: ", error);
+		});
+
+	  };
+
 	render() {
 		if (
 			localStorage.getItem("isAuth") != true &&
@@ -75,6 +126,7 @@ export default class ManageTA extends Component {
 										<div class="accept-reject-buttons"> 
 											<Button
 											type="submit"
+											onClick={()=>this.accept(obj.name,data.code)}
 											color="primary"
 											value="Submit"
 											variant="contained"
@@ -87,6 +139,7 @@ export default class ManageTA extends Component {
 										</Button>
 										<Button
 											type="submit"
+											onClick={()=>this.reject(obj.name,data.code)}
 											color="primary"
 											value="Submit"
 											variant="contained"
