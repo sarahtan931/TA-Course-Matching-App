@@ -6,8 +6,11 @@ export default class ManageTA extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+            email: "",
+			code: "",
+            hours: "",
 			message: "No Data",
-			data: [],
+			data: []
 		};
 	}
 
@@ -80,7 +83,7 @@ export default class ManageTA extends Component {
 										name="code"
 										placeholder="Course Code"
 										variant="outlined"
-										value={this.state.email}
+										value={this.state.code}
 										onChange={this.handleInputChange}
 										required
 									/>
@@ -93,7 +96,7 @@ export default class ManageTA extends Component {
 										name="hours"
 										placeholder="Hours (Week)"
 										variant="outlined"
-										value={this.state.email}
+										value={this.state.hours}
 										onChange={this.handleInputChange}
 										required
 									/>
