@@ -198,8 +198,9 @@ tr{
 }
 
 .manage-TA-title{
-  padding-left: calc( (100% - 151px) / 2 );
+  text-anchor: middle;
   color: #FFA62B;
+  text-align: center;
 }
 
 .accept-reject-header {
@@ -248,4 +249,18 @@ tr{
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+.change-TA-form{
+  background-color: #A8DADC;
+  border-radius: 15px;
+  margin-left: calc( 25vw - 151px ) ;
+  padding: 2vw;
+  width: 50vw;
+  height: 30vh;
+}
+
+.spacingline{
+  margin: 5px;
+  padding: 5px;
 }

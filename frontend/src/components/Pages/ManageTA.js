@@ -97,7 +97,6 @@ export default class ManageTA extends Component {
 										>
 											Reject
 										</Button></div> 
-										
 										<br></br>
 									</div>
 								))}
