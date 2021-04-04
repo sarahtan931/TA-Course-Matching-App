@@ -1,11 +1,7 @@
 import React, { Component, useState } from "react";
-import * as XLSX from "xlsx";
-import * as ReactBootStrap from "react-bootstrap";
-import { render } from "@testing-library/react";
-import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
-import ReactToExcel from 'react-html-table-to-excel';
-import Button from "@material-ui/core/Button";
-import { forEach } from "underscore";
+import LoginButton from "../LoginButton";
+import TextField from "@material-ui/core/TextField";
+import { Link } from "react-router-dom";
 var underscore = require("underscore");
 
 
@@ -15,11 +11,13 @@ class UploadPage extends Component {
 
     constructor(props){
         super(props);
-        // this.getCourses();
         this.state = {
             courses: [],
-        };
-        this.getCourses();	
+            course: "",
+            questions: [],
+            question: ""
+        };	
+        this.getCourses();
     }  
 
     getCourses() {
@@ -49,21 +47,46 @@ class UploadPage extends Component {
     createSelectItems() {
         let items = [];         
         for (let i = 0; i < this.state.courses.length; i++) {             
-            items.push(<option key={this.state.courses[i]} value={this.state.courses[i]}>{this.state.courses[i]}</option>);   
+            items.push(<option key={this.state.courses[i].code} value={this.state.courses[i].code}>{this.state.courses[i].code}</option>);   
             //here I will be creating my options dynamically based on
             //what props are currently passed to the parent component
         }
         return items;
     }  
 
+    addQuestion = () => {
+        this.state.questions.push(this.state.question);
+    }
+
+    handleDropChange = (event) => {
+        this.setState({course: event.target.value})
+        console.log(this.state.course);
+    }
+
+    handleInputChange = (event) => {
+		this.setState({question: event.target.value})
+	};
+
+    saveQuestions = () => {
+        // TODO: update the course and save to database
+    };
+
   render(){
     return (
         <>
             <div>
                 Requirements Page
-                Courses: <select>
+                Courses: <select onChange={this.handleDropChange}>
                     {this.createSelectItems()}
                 </select>
+            </div>
+            <div>
+                Question:
+                <input type="text" onChange={this.handleInputChange}/>
+                <button onClick={this.addQuestion}>Add</button>
+            </div>
+            <div>
+                <button onClick={this.saveQuestions}>Save</button>
             </div>
         </>
     )
