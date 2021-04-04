@@ -197,6 +197,19 @@ router.get('/:instructor', (req, res, next) => {
   })
 });
 
+router.put('/course', (req, res, next) => {
+
+  Course.updateOne({ code: req.body.code}, { questions: req.body.questions, qualifications: req.body.qualifications })
+    .then(stuff => {
+      console.log(stuff);
+      return 0;
+    })
+    .catch(e => {
+      console.log("something happened");
+      return 1;
+    });
+})
+
 router.put('/match', (req, res, next) => {
   //make course array
   isInstructor = req.body.instructor;

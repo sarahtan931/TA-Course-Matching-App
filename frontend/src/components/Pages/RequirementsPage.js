@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import LoginButton from "../LoginButton";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
+import { forEach } from "underscore";
 var underscore = require("underscore");
 
 
@@ -15,7 +16,9 @@ class UploadPage extends Component {
             courses: [],
             course: "",
             questions: [],
-            question: ""
+            question: "",
+            qualifications: [],
+            qualification: ""
         };	
         this.getCourses();
     }  
@@ -56,42 +59,79 @@ class UploadPage extends Component {
 
     addQuestion = () => {
         this.state.questions.push(this.state.question);
+        console.log(this.state.questions);
+    }
+
+    addQualification = () => {
+        this.state.qualifications.push(this.state.qualification);
+        console.log(this.state.qualification);
     }
 
     handleDropChange = (event) => {
-        this.setState({course: event.target.value})
+        this.state.course = event.target.value;
         console.log(this.state.course);
     }
 
-    handleInputChange = (event) => {
-		this.setState({question: event.target.value})
+    handleInputChangeQuestion = (event) => {
+		this.state.question = event.target.value;
 	};
+
+    handleInputChangeQualification = (event) => {
+        this.state.qualification = event.target.value;
+    };
 
     saveQuestions = () => {
         // TODO: update the course and save to database
+        console.log(this.state.courses);
+
+        fetch("http://localhost:3000/api/course", {
+			// Creates a post call with the state info
+			method: "PUT",
+			body: JSON.stringify({
+                code: this.state.course,
+                questions: this.state.questions,
+                qualifications: this.state.qualifications,
+              }),
+			headers: {
+				"Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "http://localhost:3001",
+			},
+		})
     };
 
-  render(){
-    return (
-        <>
-            <div>
-                Requirements Page
-                Courses: <select onChange={this.handleDropChange}>
-                    {this.createSelectItems()}
-                </select>
-            </div>
-            <div>
-                Question:
-                <input type="text" onChange={this.handleInputChange}/>
-                <button onClick={this.addQuestion}>Add</button>
-            </div>
-            <div>
-                <button onClick={this.saveQuestions}>Save</button>
-            </div>
-        </>
-    )
-   
-  }
+    render(){
+        return (
+            <>
+                <div>
+                    Requirements Page
+                    Courses: <select onChange={this.handleDropChange}>
+                        {this.createSelectItems()}
+                    </select>
+                </div>
+                <div>
+                    Question:
+                    <input type="text" onChange={this.handleInputChangeQuestion}/>
+                    <button onClick={this.addQuestion}>Add</button>
+                </div>
+                <div>
+                    Qualifications:
+                    <input type="text" onChange={this.handleInputChangeQualification}/>
+                    <button onClick={this.addQualification}>Add</button>
+                </div>
+                <div>
+                    <ul className="list-group">
+                        {this.state.questions.map(listitem => (
+                            <li>{listitem}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <button onClick={this.saveQuestions}>Save</button>
+                </div>
+            </>
+        )
+    
+    }
 }
 
 export default UploadPage;
