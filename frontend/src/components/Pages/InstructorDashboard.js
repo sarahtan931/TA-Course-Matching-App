@@ -4,6 +4,7 @@ import MatchPage from './MatchPage';
 import UploadPage from './UploadPage';
 import RankPage from './RankPage';
 import ManageTA from './ManageTA';
+import RequirementsPage from './RequirementsPage';
 
 
 export default class InstructorDashboard extends Component {
@@ -12,7 +13,8 @@ export default class InstructorDashboard extends Component {
 		isMatchVisible: false,
 		isUploadVisible: false,
 		isRankVisible: false,
-		isManageVisible: false
+		isManageVisible: false,
+		isRequirementsVisible: false
 
 	  }
 	render() {
@@ -36,10 +38,11 @@ export default class InstructorDashboard extends Component {
 						<h1 class="dashboard-header-title"> Course Instructor Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true, isUploadVisible: false, isRankVisible: false, isManageVisible: false }) }>Match</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: true, isRankVisible: false, isManageVisible: false })} >Upload</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: true, isManageVisible: false })} >Rank</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: false, isManageVisible: true }) } >Manage TA's</a>
+						<a onClick={() => this.setState({ isMatchVisible: true, isUploadVisible: false, isRankVisible: false, isManageVisible: false, isRequirementsVisible: false }) }>Match</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: true, isRankVisible: false, isManageVisible: false, isRequirementsVisible: false })} >Upload</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: true, isManageVisible: false, isRequirementsVisible: false })} >Rank</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: false, isManageVisible: true, isRequirementsVisible: false }) } >Manage TA's</a>
+						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: false, isManageVisible: false, isRequirementsVisible: true }) } >Requirements</a>
 						
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>
@@ -51,6 +54,7 @@ export default class InstructorDashboard extends Component {
 							{ this.state.isUploadVisible ? <UploadPage />: null }
 							{ this.state.isRankVisible ? <RankPage />: null }
 							{ this.state.isManageVisible ? <ManageTA/>: null}
+							{ this.state.isRequirementsVisible ? <RequirementsPage/>: null}
 						</div>
 					
 				</div>
