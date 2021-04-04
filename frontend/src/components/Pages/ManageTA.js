@@ -137,6 +137,7 @@ export default class ManageTA extends Component {
 										>
 											Accept
 										</Button>
+										<a class="spacingline"> </a>
 										<Button
 											type="submit"
 											onClick={()=>this.reject(obj.name,data.code)}
