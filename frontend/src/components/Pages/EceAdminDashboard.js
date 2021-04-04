@@ -39,7 +39,7 @@ export default class EceAdminDashboard extends Component {
 						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false}) }>Calculate Course Hours</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false}) } >Register New User</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false}) } >Edit TA</a>
-						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true}) } >Save TAs</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true}) } >Create/Save TAs</a>
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>
 						</div>
