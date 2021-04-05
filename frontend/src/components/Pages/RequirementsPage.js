@@ -80,11 +80,11 @@ class RequirementsPage extends Component {
         // TODO: update the course and save to database
         console.log(this.state.courses);
 
-        fetch("http://localhost:3000/api/course", {
+        fetch("http://localhost:3000/api/courseinfo", {
 			// Creates a post call with the state info
-			method: "PUT",
+			method: "POST",
 			body: JSON.stringify({
-                code: this.state.course,
+                course: this.state.course,
                 questions: this.state.questions,
                 qualifications: this.state.qualifications,
               }),
