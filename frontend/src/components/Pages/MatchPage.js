@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Course from "../Course";
 import Button from "@material-ui/core/Button";
+import { Route , withRouter} from 'react-router-dom';
 
 export default class MatchPage extends Component {
 	constructor(props) {
@@ -62,10 +63,10 @@ export default class MatchPage extends Component {
 
 	render() {
 		if (
-			localStorage.getItem("isAuth") != true &&
+			localStorage.getItem("isAuth") == true &&
 			localStorage.getItem("category") == "instructor" 
 		) {
-			this.props.history.push("/"); // Redirect to the login page
+			this.props.history.push('/'); // Redirect to the login page
 			return (
 				<div>
 					<h1>Redirecting...</h1>
