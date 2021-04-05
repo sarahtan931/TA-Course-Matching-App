@@ -110,7 +110,7 @@ class CalcCourseHours extends Component {
 
     if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "admin"
+			localStorage.getItem("category") != "chair"
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (
@@ -120,9 +120,11 @@ class CalcCourseHours extends Component {
 			);
 		} else {
     return(
-      <div>
+      <div class="accept-reject-card">
+        <h1 class="manage-TA-title">Calculate Course Hours</h1>
         <input
         type="file"
+        class="upload-ta-input"
         onChange={(e) => {
           const file = e.target.files[0];
           this.readExcel(file);

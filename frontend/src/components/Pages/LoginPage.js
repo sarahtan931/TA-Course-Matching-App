@@ -49,9 +49,9 @@ class LoginPage extends Component {
 							} else if (data.category == "admin") {
 								//route to chair dashboard
 								this.props.history.push("/eceadmin-dashboard");
-							} else {
+							} else if (data.category == "chair") {
 								//route to ece admin dashboard
-								this.props.history.push("/contact");
+								this.props.history.push("/chair-dashboard");
 							}
 						}.bind(this)
 					); // Needed to bind this to the non arrow func
