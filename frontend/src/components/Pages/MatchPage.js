@@ -77,10 +77,8 @@ export default class MatchPage extends Component {
 					<div class="accept-reject-card">
 						<h1 class="manage-TA-title">User Preference</h1>
 						<div onChange={this.setCategory.bind(this)}>
-							<input type="radio" value="true" name="instructor" /> 
-							<a class="small-text">Instructor</a>
-							<input type="radio" value="false" name="instructor" />
-							<a class="small-text">Teaching Assistant</a>
+							<input type="radio" value="true" name="instructor" /> Instructor
+							<input type="radio" value="false" name="instructor" /> Teaching Assistant
 						</div>
 						<Button
 							type="submit"
