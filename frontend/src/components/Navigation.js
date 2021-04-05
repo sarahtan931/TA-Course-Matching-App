@@ -9,6 +9,7 @@ import InstructorDashboard from './Pages/InstructorDashboard';
 import EceAdminDashboard from './Pages/EceAdminDashboard';
 import RankPage from './Pages/RankPage';
 import RequirementsPage from './Pages/RequirementsPage';
+import AddCoursePage from './Pages/AddCoursePage';
  
 const Navigation = () => {
     return (
@@ -32,6 +33,7 @@ const Navigation = () => {
            <Route path="/upload" component={UploadPage} exact/>
            <Route path="/rank" component={RankPage} exact/>
            <Route path="/requirements" component={RequirementsPage} exact/>
+           <Route path="/addcourse" component={AddCoursePage} exact/>
       </Switch>
       </BrowserRouter>
       </div> 

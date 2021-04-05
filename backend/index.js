@@ -542,6 +542,13 @@ router.put('/getcourses', (req, res, next) => {
   });
 })
 
+// get instructors
+router.put('/getinstructors', (req, res, next) => {
+  Instructor.find({}, function (err, instructors) {
+    res.status(200).send(instructors);
+  });
+})
+
 //save TA applicant information
 router.post('/saveTAs', (req, res, next) => {
   ta_array = req.body.tas;

@@ -6,7 +6,7 @@ import { forEach } from "underscore";
 var underscore = require("underscore");
 
 
-class UploadPage extends Component {
+class RequirementsPage extends Component {
 
   SAVE = '<Button id = "save">Save</Button>';
 
@@ -18,7 +18,7 @@ class UploadPage extends Component {
             questions: [],
             question: "",
             qualifications: [],
-            qualification: ""
+            qualification: "",
         };	
         this.getCourses();
     }  
@@ -134,4 +134,4 @@ class UploadPage extends Component {
     }
 }
 
-export default UploadPage;
+export default RequirementsPage;
