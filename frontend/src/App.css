@@ -236,6 +236,7 @@ tr{
   background-color: #A8DADC;
   padding-left: 1vw;
   width: calc( (100% - 151px) / 2 );
+  height: fit-content;
 }
 
 .manage-show-TA {
@@ -261,5 +262,18 @@ tr{
 }
 
 .spacingline{
+  padding: 5px;
+}
+
+.small-text {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #1D3557;
+  display: block;
+}
+
+.upload-ta-input{
+  background-color: #FFA62B;
   padding: 5px;
 }

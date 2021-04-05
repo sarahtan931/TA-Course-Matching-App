@@ -120,9 +120,11 @@ class CalcCourseHours extends Component {
 			);
 		} else {
     return(
-      <div>
+      <div class="accept-reject-card">
+        <h1 class="manage-TA-title">Calculate Course Hours</h1>
         <input
         type="file"
+        class="upload-ta-input"
         onChange={(e) => {
           const file = e.target.files[0];
           this.readExcel(file);

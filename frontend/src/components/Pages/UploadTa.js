@@ -1,14 +1,9 @@
 import React, { Component, useState } from "react";
 import * as XLSX from "xlsx";
 import * as ReactBootStrap from "react-bootstrap";
-import { render } from "@testing-library/react";
-import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import ReactToExcel from 'react-html-table-to-excel';
-var underscore = require("underscore");
-
 
 class UploadTa extends Component {
-
   SAVE = '<button id = "save">Save</button>';
 
   constructor(props){
@@ -92,11 +87,11 @@ class UploadTa extends Component {
     return(
       <div>
         <input
-        type="file"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          this.readExcel(file);
-        }}/>
+          type="file"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            this.readExcel(file);
+          }}/>
         <ReactBootStrap.Table id ="excelTable" className="table table-dark">
         <thead id = "head">
   
@@ -106,8 +101,8 @@ class UploadTa extends Component {
         </tbody>
         </ReactBootStrap.Table>
         <div id = 'but'>
-          <button id = "save" onClick = {this.calcHours}>Calculate Hours</button>
-          <button id = "save" onClick = {this.save}>Save</button>
+          <button id="save" onClick={this.calcHours}>Calculate Hours</button>
+          <button id="save" onClick={this.save}>Save</button>
           <div>
 					{this.state.message}
 				</div>
