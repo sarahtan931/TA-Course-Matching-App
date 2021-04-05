@@ -6,8 +6,8 @@ export default class ManageTA extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            email: "",
-			code: "",
+            ta: "",
+			course: "",
             hours: "",
 			message: "No Data",
 			data: []
@@ -72,11 +72,11 @@ export default class ManageTA extends Component {
 									<TextField
 										fullWidth
 										class="login-textfield"
-										type="email"
-										name="email"
+										type="text"
+										name="ta"
 										placeholder="TA Email"
 										variant="outlined"
-										value={this.state.email}
+										value={this.state.ta}
 										onChange={this.handleInputChange}
 										required
 									/>
@@ -86,10 +86,10 @@ export default class ManageTA extends Component {
 										fullWidth
 										class="login-textfield"
 										type="text"
-										name="code"
+										name="course"
 										placeholder="Course Code"
 										variant="outlined"
-										value={this.state.code}
+										value={this.state.course}
 										onChange={this.handleInputChange}
 										required
 									/>
