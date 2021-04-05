@@ -5,6 +5,7 @@ import CalcCourseHours from './CalcCourseHours';
 import RegisterUser from './RegisterUser';
 import ChangeUser from './ChangeUser'
 import SaveTA from './SaveTA'
+import AddCoursePage from './AddCoursePage';
 
 export default class EceAdminDashboard extends Component {
 
@@ -13,7 +14,8 @@ export default class EceAdminDashboard extends Component {
 		isHoursVisible: false,
 		isRegisterVisible: false,
 		isChangeVisible: false,
-		isSaveTAVisible: false
+		isSaveTAVisible: false,
+		isAddCoursePageVisible: false
 	  }
 	render() {
 		// Check that the user is able to be on the page otherwise redirect
@@ -35,10 +37,16 @@ export default class EceAdminDashboard extends Component {
 						<h1 class="dashboard-header-title"> ECE Admin Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false}) }>Match</a>
-						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false}) } >Register New User</a>
-						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false}) } >Edit TA</a>
-						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true}) } >Create/Save TAs</a>
+						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) }>Match</a>
+						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) }>Calculate Course Hours</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Register New User</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Edit TA</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true, isAddCoursePageVisible: false}) } >Create/Save TAs</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: true}) } >Add Course</a>
+						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) }>Match</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Register New User</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Edit TA</a>
+						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true, isAddCoursePageVisible: false}) } >Create/Save TAs</a>
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>
 						</div>
@@ -50,6 +58,7 @@ export default class EceAdminDashboard extends Component {
 							{ this.state.isRegisterVisible ? <RegisterUser/>: null}
 							{ this.state.isChangeVisible ? <ChangeUser/>: null}
 							{ this.state.isSaveTAVisible ? <SaveTA/>: null}
+							{ this.state.isAddCoursePageVisible ? <AddCoursePage/>: null}
 						</div>
 					
 				</div>
