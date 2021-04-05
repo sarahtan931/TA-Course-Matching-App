@@ -13,14 +13,13 @@ export default class RegisterUser extends Component {
 			email: "",
 			authenticationkey: "",
 			password: "",
-			category: ""
-
+			category: "",
 		};
 	}
 
 	setCategory(event) {
-		this.setState({"category" : event.target.value});
-	  }
+		this.setState({ category: event.target.value });
+	}
 
 	// When inputs change update the state variables
 	handleInputChange = (event) => {
@@ -32,7 +31,7 @@ export default class RegisterUser extends Component {
 
 	// When the button is clicked this function is called on the form
 	onSubmit = (event) => {
-		console.log(this.state)
+		console.log(this.state);
 		event.preventDefault();
 		fetch("http://localhost:3000/api/register", {
 			method: "POST",
@@ -45,7 +44,7 @@ export default class RegisterUser extends Component {
 				if (res.status === 200) {
 					// If the auth is correct, redirect to login page
 					//this.props.history.push("/");
-					alert('New User Added')
+					alert("New User Added");
 				} else {
 					// Throw errors
 					const error = new Error(res.error);
@@ -62,86 +61,65 @@ export default class RegisterUser extends Component {
 	render() {
 		// Rendering the register page component
 		return (
-			<div>
-				<div>
-					<div class="login-bottom-text">
-						<Link
-							to="/contact"
-							style={{
-								color: "#FFA62B",
-							}}
-						>
-							Contact Us
-						</Link>
+			<div class="accept-reject-card">
+				<h1 class="manage-TA-title">Add a New User</h1>
+				<form onSubmit={this.onSubmit}>
+					<TextField
+						fullWidth
+						class="login-textfield"
+						type="name"
+						name="name"
+						placeholder="Enter New User's Name"
+						variant="outlined"
+						fullWidth
+						value={this.state.name}
+						onChange={this.handleInputChange}
+						required
+					/>
+					<TextField
+						fullWidth
+						class="login-textfield"
+						type="email"
+						name="email"
+						placeholder="Enter email"
+						variant="outlined"
+						fullWidth
+						value={this.state.email}
+						onChange={this.handleInputChange}
+						required
+					/>
+					<div onChange={this.setCategory.bind(this)}>
+						<input type="radio" value="admin" name="category" /> ECE Admin
+						<input type="radio" value="instructor" name="category" /> Instructor
+						<input type="radio" value="chair" name="category" /> Undergraduate
+						Chair
 					</div>
-				</div>
-				<div >
-					<h1>Add a new user account</h1>
-					<form onSubmit={this.onSubmit}>
-						<div class="register-background">
-							<div>
-								<TextField
-									fullWidth
-									class="login-textfield"
-									type="name"
-									name="name"
-									placeholder="Enter New User's Name"
-									variant="outlined"
-									value={this.state.name}
-									onChange={this.handleInputChange}
-									required
-								/>
-							</div>
-							<div>
-								<TextField
-									fullWidth
-									class="login-textfield"
-									type="email"
-									name="email"
-									placeholder="Enter email"
-									variant="outlined"
-									value={this.state.email}
-									onChange={this.handleInputChange}
-									required
-								/>
-							</div>
-							<div onChange={this.setCategory.bind(this)}>
-        						<input type="radio" value="admin" name="category"/> ECE Admin
-        						<input type="radio" value="instructor" name="category"/> Instructor
-								<input type="radio" value="chair" name="category"/> Undergraduate Chair
-      						</div>
-							<div>
-								<TextField
-									fullWidth
-									class="login-textfield"
-									type="authenticationkey"
-									name="authenticationkey"
-									placeholder="Enter Authentication Key"
-									variant="outlined"
-									value={this.state.authenticationkey}
-									onChange={this.handleInputChange}
-									required
-								/>
-							</div>
-							<div>
-								<Button
-									type="submit"
-									color="primary"
-									value="Submit"
-									variant="contained"
-									size="large"
-									fullWidth
-									style={{
-										backgroundColor: "#FFA62B",
-									}}
-									>
-									Register User
-								</Button>
-							</div>
-						</div>
-					</form>
-					<p class="trademark-mini-text">Copyright @ its_works_locally 2021.</p>
-				</div>
+					<TextField
+						fullWidth
+						class="login-textfield"
+						type="authenticationkey"
+						name="authenticationkey"
+						placeholder="Enter Authentication Key"
+						variant="outlined"
+						fullWidth
+						value={this.state.authenticationkey}
+						onChange={this.handleInputChange}
+						required
+					/>
+					<Button
+						type="submit"
+						color="primary"
+						value="Submit"
+						variant="contained"
+						size="large"
+						fullWidth
+						style={{
+							backgroundColor: "#FFA62B",
+						}}
+					>
+						Register User
+					</Button>
+				</form>
 			</div>
 		);
 	}
