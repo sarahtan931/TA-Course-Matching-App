@@ -110,7 +110,7 @@ class CalcCourseHours extends Component {
 
     if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "admin"
+			localStorage.getItem("category") != "chair"
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (

@@ -7,6 +7,7 @@ import MatchPage from './Pages/MatchPage';
 import UploadPage from './Pages/UploadPage';
 import InstructorDashboard from './Pages/InstructorDashboard';
 import EceAdminDashboard from './Pages/EceAdminDashboard';
+import ChairDashboard from './Pages/ChairDashboard';
 import RankPage from './Pages/RankPage';
  
 const Navigation = () => {
@@ -19,6 +20,7 @@ const Navigation = () => {
         <li class="nav-li"><Link to="/register">Register</Link></li>
         <li class="nav-li"><Link to="/instructor-dashboard">Instructor Dashboard</Link></li>
         <li class="nav-li"><Link to="/eceadmin-dashboard">ECE Admin Dashboard</Link></li>
+        <li class="nav-li"><Link to="/chair-dashboard">Chair Dashboard</Link></li>
       </ul>
 
       <Switch>
@@ -30,6 +32,7 @@ const Navigation = () => {
            <Route path='/eceadmin-dashboard' component={EceAdminDashboard}/>
            <Route path="/upload" component={UploadPage} exact/>
            <Route path="/rank" component={RankPage} exact/>
+           <Route path="/chair-dashboard" component={ChairDashboard} exact/>
       </Switch>
       </BrowserRouter>
       </div> 

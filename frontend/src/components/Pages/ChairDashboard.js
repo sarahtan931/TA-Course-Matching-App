@@ -6,7 +6,7 @@ import RegisterUser from './RegisterUser';
 import ChangeUser from './ChangeUser'
 import SaveTA from './SaveTA'
 
-export default class EceAdminDashboard extends Component {
+export default class ChairDashboard extends Component {
 
 	state = {
 		isMatchVisible: false,
@@ -19,7 +19,7 @@ export default class EceAdminDashboard extends Component {
 		// Check that the user is able to be on the page otherwise redirect
 		if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "admin"
+			localStorage.getItem("category") != "chair"
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (
@@ -32,10 +32,11 @@ export default class EceAdminDashboard extends Component {
 			return (
 				<div>
 					<div class="dashboard-nav-bar">
-						<h1 class="dashboard-header-title"> ECE Admin Dashboard</h1>
+						<h1 class="dashboard-header-title"> Undergraduate Chair Dashboard</h1>
 					</div>
 					<div class="sidenav">
 						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false}) }>Match</a>
+						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false}) }>Calculate Course Hours</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false}) } >Register New User</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false}) } >Edit TA</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true}) } >Create/Save TAs</a>
