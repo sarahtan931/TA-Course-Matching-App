@@ -23,6 +23,7 @@ export default class ManageTA extends Component {
 	};
 
     onSubmit = (event) => {
+
 		// Prevent page refresh
 		event.preventDefault();
 		fetch("http://localhost:3000/api/add_ta", {
@@ -37,6 +38,7 @@ export default class ManageTA extends Component {
 				if (res.status === 200) {
 					alert("Successfully changed");
 				} else {
+					alert("Error: please enter valid information");
 					const error = new Error(res.error);
 					throw error;
 				}
