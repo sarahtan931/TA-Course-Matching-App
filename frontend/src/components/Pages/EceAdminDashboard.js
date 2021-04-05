@@ -37,16 +37,10 @@ export default class EceAdminDashboard extends Component {
 						<h1 class="dashboard-header-title"> ECE Admin Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) }>Match</a>
-						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) }>Calculate Course Hours</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Register New User</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Edit TA</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true, isAddCoursePageVisible: false}) } >Create/Save TAs</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: true}) } >Add Course</a>
-						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) }>Match</a>
-						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Register New User</a>
-						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false, isAddCoursePageVisible: false}) } >Edit TA</a>
-						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true, isAddCoursePageVisible: false}) } >Create/Save TAs</a>
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>
 						</div>
