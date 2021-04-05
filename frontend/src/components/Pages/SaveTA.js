@@ -69,6 +69,39 @@ class SaveTA extends Component {
       alert("TA applicants successfully saved to the database!"); 
       console.log(this.information);
       //send this.information to database
+      fetch("http://localhost:3000/api/saveTas", {
+			method: "POST",
+			body: JSON.stringify({
+        //return '<tr><td>' + oneObject['Course Code'] +'</td><td>'+ oneObject['Applicant Name'] + '</td><td>'+
+        // oneObject['applicant email'] + '</td><td>'+ oneObject['Applicant status ( 1- Fundable, 2-NotFundable,3-External)'] 
+        //+ '</td><td>'+ oneObject['Q1'] + '</td><td>'+ oneObject['A1'] + '</td><td>'+ oneObject['Q2'] +
+        // '</td><td>'+ oneObject['A2'] + '</td><td>'+ oneObject['Q3'] + '</td><td>'+ oneObject['A3'] + '</td></tr>';
+              experience: oneObject["experience"],
+              priority: oneObject["priority"] ,
+              email: oneObject["applicant email"] ,
+              name: oneObject["Applicant Name"] ,
+              preference: oneObject["Applicant email"]
+      }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((res) => {
+				if (res.status === 200) {
+					// If the auth is correct, redirect to login page
+					//this.props.history.push("/");
+					alert('New User Added')
+				} else {
+					// Throw errors
+					const error = new Error(res.error);
+					throw error;
+				}
+			})
+			.catch((err) => {
+				// More error handling, not specific just alerts
+				console.error(err);
+				alert("Error registering in please try again");
+			});
     }
   }
 
