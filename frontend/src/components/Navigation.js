@@ -37,11 +37,8 @@ const Navigation = () => {
            <Route path="/rank" component={RankPage} exact/>
            <Route path="/requirements" component={RequirementsPage} exact/>
            <Route path="/addcourse" component={AddCoursePage} exact/>
-<<<<<<< HEAD
            <Route path="/generatereq" component={GenerateReqPage} exact/>
-=======
            <Route path="/chair-dashboard" component={ChairDashboard} exact/>
->>>>>>> 6bb317659d06117308e8bd5d5f62e55651dbd431
       </Switch>
       </BrowserRouter>
       </div> 
