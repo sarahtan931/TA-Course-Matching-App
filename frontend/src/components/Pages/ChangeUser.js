@@ -6,8 +6,8 @@ export default class ManageTA extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            email: "",
-			code: "",
+            ta: "",
+			course: "",
             hours: "",
 			message: "No Data",
 			data: []
@@ -23,6 +23,7 @@ export default class ManageTA extends Component {
 	};
 
     onSubmit = (event) => {
+
 		// Prevent page refresh
 		event.preventDefault();
 		fetch("http://localhost:3000/api/add_ta", {
@@ -37,6 +38,7 @@ export default class ManageTA extends Component {
 				if (res.status === 200) {
 					alert("Successfully changed");
 				} else {
+					alert("Error: please enter valid information");
 					const error = new Error(res.error);
 					throw error;
 				}
@@ -49,7 +51,7 @@ export default class ManageTA extends Component {
 	render() {
 		if (
 			localStorage.getItem("isAuth") != true &&
-			localStorage.getItem("category") != "admin"
+			localStorage.getItem("category") == "instructor" 
 		) {
 			this.props.history.push("/"); // Redirect to the login page
 			return (
@@ -72,11 +74,11 @@ export default class ManageTA extends Component {
 									<TextField
 										fullWidth
 										class="login-textfield"
-										type="email"
-										name="email"
+										type="text"
+										name="ta"
 										placeholder="TA Email"
 										variant="outlined"
-										value={this.state.email}
+										value={this.state.ta}
 										onChange={this.handleInputChange}
 										required
 									/>
@@ -86,10 +88,10 @@ export default class ManageTA extends Component {
 										fullWidth
 										class="login-textfield"
 										type="text"
-										name="code"
+										name="course"
 										placeholder="Course Code"
 										variant="outlined"
-										value={this.state.code}
+										value={this.state.course}
 										onChange={this.handleInputChange}
 										required
 									/>

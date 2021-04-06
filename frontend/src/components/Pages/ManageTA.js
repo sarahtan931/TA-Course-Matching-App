@@ -13,6 +13,7 @@ export default class ManageTA extends Component {
 
 	showMatches = () => {
 		document.getElementById("load").style.display = "block";
+		let instructor = localStorage.getItem("email");
 
 		fetch("http://localhost:3000/api/getcourses", {
 			method: "PUT",
@@ -28,7 +29,12 @@ export default class ManageTA extends Component {
 					console.log("Error! Fix your Code!");
 				}
 
-				this.setState({ message: "Have Data", data: data });
+				const filteredData = data.filter((course) => {
+					return course.instructors.includes(instructor);
+					
+				});
+
+				this.setState({ message: "Have Data", data: filteredData });
 				document.getElementById("load").style.display = "none";
 			})
 			.catch((error) => {

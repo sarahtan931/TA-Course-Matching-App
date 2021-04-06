@@ -66,7 +66,7 @@ class RankPage extends Component {
 			<>
 				<div>
 					<button onClick={this.getInstructor}>
-						Test
+						Rank TAs
 					</button>
 					{this.state.code}
 					{this.state.tas ? (

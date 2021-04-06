@@ -516,6 +516,7 @@ router.post('/courseinfo', (req, res, next) => {
   let ques = req.body.questions;
   let qual = req.body.qualifications;
 
+  console.log(course, ques, qual);
   Course.findOne({ code: course })
     .then(data => {
       if (data) {

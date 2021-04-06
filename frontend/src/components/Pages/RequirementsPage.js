@@ -1,9 +1,5 @@
-import React, { Component, useState } from "react";
-import LoginButton from "../LoginButton";
-import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
-import { forEach } from "underscore";
-var underscore = require("underscore");
+import React, { Component } from "react";
+import Button from "@material-ui/core/Button";
 
 
 class RequirementsPage extends Component {
@@ -84,11 +80,11 @@ class RequirementsPage extends Component {
         // TODO: update the course and save to database
         console.log(this.state.courses);
 
-        fetch("http://localhost:3000/api/course", {
+        fetch("http://localhost:3000/api/courseinfo", {
 			// Creates a post call with the state info
-			method: "PUT",
+			method: "POST",
 			body: JSON.stringify({
-                code: this.state.course,
+                course: this.state.course,
                 questions: this.state.questions,
                 qualifications: this.state.qualifications,
               }),
@@ -101,7 +97,8 @@ class RequirementsPage extends Component {
 
     render(){
         return (
-            <>
+            <div class="accept-reject-card">
+                <h1 class="manage-TA-title">Requirements Questions</h1>
                 <div>
                     Requirements Page
                     Courses: <select onChange={this.handleDropChange}>
@@ -109,12 +106,12 @@ class RequirementsPage extends Component {
                     </select>
                 </div>
                 <div>
-                    Question:
+                    Question: 
                     <input type="text" onChange={this.handleInputChangeQuestion}/>
                     <button onClick={this.addQuestion}>Add</button>
                 </div>
                 <div>
-                    Qualifications:
+                    Qualifications: 
                     <input type="text" onChange={this.handleInputChangeQualification}/>
                     <button onClick={this.addQualification}>Add</button>
                 </div>
@@ -126,9 +123,21 @@ class RequirementsPage extends Component {
                     </ul>
                 </div>
                 <div>
-                    <button onClick={this.saveQuestions}>Save</button>
+                <Button
+                    type="submit"
+                    color="primary"
+                    value="Submit"
+                    variant="contained"
+                    fullWidth
+                    onClick={this.saveQuestions}
+                    style={{
+                        backgroundColor: "#FFA62B",
+                    }}
+                >
+                    Save
+                </Button>
                 </div>
-            </>
+            </div>
         )
     
     }

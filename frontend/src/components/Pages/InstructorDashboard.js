@@ -38,13 +38,9 @@ export default class InstructorDashboard extends Component {
 						<h1 class="dashboard-header-title"> Course Instructor Dashboard</h1>
 					</div>
 					<div class="sidenav">
-						<a onClick={() => this.setState({ isMatchVisible: true, isUploadVisible: false, isRankVisible: false, isManageVisible: false, isRequirementsVisible: false }) }>Match</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: true, isRankVisible: false, isManageVisible: false, isRequirementsVisible: false })} >Upload</a>
 						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: true, isManageVisible: false, isRequirementsVisible: false })} >Rank</a>
 						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: false, isManageVisible: true, isRequirementsVisible: false }) } >Manage TA's</a>
 						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: false, isManageVisible: false, isRequirementsVisible: true }) } >Requirements</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: true, isManageVisible: false, isRequirementsVisible: false })} >Rank</a>
-						<a onClick={() => this.setState({ isMatchVisible: false, isUploadVisible: false, isRankVisible: false, isManageVisible: true, isRequirementsVisible: false }) } >Manage TA's</a>
 						
 						<div class="logout-button">
 							<LogoutButton></LogoutButton>

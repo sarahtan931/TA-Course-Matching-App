@@ -40,7 +40,6 @@ export default class EceAdminDashboard extends Component {
 					</div>
 					<div class="sidenav">
 						<a onClick={() => this.setState({ isMatchVisible: true, isHoursVisible:false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false, isGenerateReqPageVisible: false }) }>Match</a>
-						<a onClick={() => this.setState({ isHoursVisible: true, isMatchVisible: false,  isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false, isGenerateReqPageVisible: false }) }>Calculate Course Hours</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: true, isChangeVisible: false, isSaveTAVisible: false, isAddCoursePageVisible: false, isGenerateReqPageVisible: false }) } >Register New User</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: true, isSaveTAVisible: false, isAddCoursePageVisible: false, isGenerateReqPageVisible: false }) } >Edit TA</a>
 						<a onClick={() => this.setState({ isHoursVisible: false, isMatchVisible: false, isRegisterVisible: false, isChangeVisible: false, isSaveTAVisible: true, isAddCoursePageVisible: false, isGenerateReqPageVisible: false }) } >Create/Save TAs</a>
