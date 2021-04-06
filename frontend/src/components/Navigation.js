@@ -10,6 +10,7 @@ import EceAdminDashboard from './Pages/EceAdminDashboard';
 import RankPage from './Pages/RankPage';
 import RequirementsPage from './Pages/RequirementsPage';
 import AddCoursePage from './Pages/AddCoursePage';
+import GenerateReqPage from './Pages/GenerateReqPage';
  
 const Navigation = () => {
     return (
@@ -34,6 +35,7 @@ const Navigation = () => {
            <Route path="/rank" component={RankPage} exact/>
            <Route path="/requirements" component={RequirementsPage} exact/>
            <Route path="/addcourse" component={AddCoursePage} exact/>
+           <Route path="/generatereq" component={GenerateReqPage} exact/>
       </Switch>
       </BrowserRouter>
       </div> 
